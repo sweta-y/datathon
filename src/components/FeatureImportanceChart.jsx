@@ -73,7 +73,7 @@ export default function FeatureImportanceChart({ featureImportance }) {
       className="panel border-border rounded-sm p-5"
     >
       <div className="section-label mb-1">Explainability</div>
-      <div className="text-sm font-bold text-white mb-4">Top 10 Feature Importances (Random Forest)</div>
+      <h3 className="text-xl font-bold text-slate-900 mb-4">Top 10 feature importances (Random Forest)</h3>
 
       <ResponsiveContainer width="100%" height={230}>
         <BarChart
@@ -107,11 +107,11 @@ export default function FeatureImportanceChart({ featureImportance }) {
         </BarChart>
       </ResponsiveContainer>
 
-      <div className="mt-3 pt-3 border-t border-border flex items-center gap-4 text-[9px] font-mono text-dim">
-        <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-sm inline-block bg-magenta/80" />Critical (#1-2)</span>
-        <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-sm inline-block bg-amber/80" />High (#3-4)</span>
-        <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-sm inline-block bg-violet/80" />Medium (#5-6)</span>
-        <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-sm inline-block bg-cyan/80" />Low (#7-10)</span>
+      <div className="mt-3 pt-3 border-t border-slate-200 flex items-center gap-4 text-[13px] font-mono text-slate-500">
+        <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-sm inline-block bg-rose-500" />Critical (#1-2)</span>
+        <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-sm inline-block bg-amber-500" />High (#3-4)</span>
+        <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-sm inline-block bg-indigo-500" />Medium (#5-6)</span>
+        <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-sm inline-block bg-sky-500" />Low (#7-10)</span>
       </div>
     </motion.div>
   );

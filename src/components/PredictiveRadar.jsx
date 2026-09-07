@@ -30,8 +30,8 @@ export default function PredictiveRadar() {
       transition={{ duration: 0.45, delay: 0.5 }}
       className="panel border-border rounded-sm p-5"
     >
-      <div className="section-label mb-1">Churn Driver Analysis</div>
-      <div className="text-sm font-bold text-white mb-3">Predictive Radar</div>
+      <div className="section-label mb-1">Churn driver analysis</div>
+      <h3 className="text-xl font-bold text-slate-900 mb-3">Predictive risk radar</h3>
 
       <ResponsiveContainer width="100%" height={195}>
         <RadarChart data={radarData} margin={{ top: 0, right: 10, bottom: 0, left: 10 }}>
@@ -41,18 +41,18 @@ export default function PredictiveRadar() {
               <stop offset="100%" stopColor="#7C5CFF" stopOpacity={0.1} />
             </linearGradient>
           </defs>
-          <PolarGrid stroke="#1C1C1C" />
+          <PolarGrid stroke="#E2E8F0" />
           <PolarAngleAxis
             dataKey="driver"
-            tick={{ fill: '#666', fontSize: 9, fontFamily: 'Space Mono' }}
+            tick={{ fill: '#64748B', fontSize: 11, fontFamily: 'Space Grotesk' }}
           />
           <Tooltip content={<CustomTooltip />} />
           <Radar
             dataKey="severity"
-            stroke="#FF4FD8"
+            stroke="#6366F1"
             strokeWidth={1.5}
             fill="url(#radarGrad)"
-            dot={{ fill: '#FF4FD8', r: 3, strokeWidth: 0 }}
+            dot={{ fill: '#6366F1', r: 3, strokeWidth: 0 }}
           />
         </RadarChart>
       </ResponsiveContainer>
@@ -62,9 +62,9 @@ export default function PredictiveRadar() {
         {radarData.map((d) => {
           const sev = getSeverityLabel(d.severity);
           return (
-            <div key={d.driver} className="flex items-center justify-between text-[9px] font-mono">
-              <span className="text-dim truncate">{d.driver}</span>
-              <span style={{ color: sev.color }} className="ml-1 flex-shrink-0">{d.severity}</span>
+            <div key={d.driver} className="flex items-center justify-between text-[13px] font-mono">
+              <span className="text-slate-600 truncate">{d.driver}</span>
+              <span style={{ color: sev.color }} className="ml-1 flex-shrink-0 font-bold">{d.severity}</span>
             </div>
           );
         })}

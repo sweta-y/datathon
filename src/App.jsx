@@ -6,28 +6,56 @@ import SignupPage from './components/SignupPage';
 import Sidebar from './components/Sidebar';
 import TopBar from './components/TopBar';
 import KPICard from './components/KPICard';
-import ChurnTrendChart from './components/ChurnTrendChart';
-import RiskDistributionChart from './components/RiskDistributionChart';
-import ChurnBySegmentChart from './components/ChurnBySegmentChart';
-import PredictiveRadar from './components/PredictiveRadar';
 import CustomerTable from './components/CustomerTable';
 import CustomerModal from './components/CustomerModal';
 import ModelPerformancePanel from './components/ModelPerformancePanel';
 import RetentionPlaybooks from './components/RetentionPlaybooks';
 import FilterBar from './components/FilterBar';
-import CohortHeatmap from './components/CohortHeatmap';
-import FeatureImportanceChart from './components/FeatureImportanceChart';
-import ChurnGauge from './components/ChurnGauge';
 import AlertBanner from './components/AlertBanner';
-import { kpis } from './data/mockData';
+import AnalyticsCarousel from './components/AnalyticsCarousel';
+import AIInsightCard from './components/AIInsightCard';
+import ClaudeImportModal from './components/ClaudeImportModal';
+import FeatureImportanceChart from './components/FeatureImportanceChart';
 import { fmt } from './utils/formatters';
 import { Users, AlertTriangle, TrendingUp, DollarSign } from 'lucide-react';
 
 const KPI_CONFIG = [
-  { label: 'Total Customers',  value: fmt.number(kpis.totalCustomers),  delta: null,                              color: 'cyan',    icon: Users,         index: 0 },
-  { label: 'Churn Rate (MoM)', value: fmt.pct(kpis.churnRate),          delta: `${kpis.churnRateDelta.toFixed(1)}%`, deltaLabel: 'vs last month', color: 'magenta', icon: TrendingUp,    index: 1 },
-  { label: 'At-Risk Customers',value: fmt.number(kpis.atRiskCount),     delta: `+${kpis.atRiskDelta}`,            deltaLabel: 'added this week', color: 'amber',   icon: AlertTriangle, index: 2 },
-  { label: 'Revenue at Risk',  value: fmt.currency(kpis.revenueAtRisk), delta: fmt.currency(kpis.revenueAtRiskDelta), deltaLabel: 'MoM increase', color: 'violet',  icon: DollarSign,    index: 3 },
+  {
+    label: 'Total customers',
+    value: fmt.number(7043),
+    delta: null,
+    context: 'All records in Telco dataset',
+    color: 'cyan',
+    icon: Users,
+    index: 0,
+  },
+  {
+    label: 'Churn rate',
+    value: '26.5%',
+    delta: null, // Omitted: single historical dataset snapshot; no fabricated trend comparison
+    context: '1,869 churned of 7,043 accounts',
+    color: 'magenta',
+    icon: TrendingUp,
+    index: 1,
+  },
+  {
+    label: 'High-risk customers',
+    value: fmt.number(1423),
+    delta: null, // Omitted: no fabricated weekly delta
+    context: 'Model prediction probability ≥ 70%',
+    color: 'amber',
+    icon: AlertTriangle,
+    index: 2,
+  },
+  {
+    label: 'Revenue at risk',
+    value: fmt.currency(109213),
+    delta: null, // Omitted: no fabricated MoM delta
+    context: 'Monthly billing rate across high-risk accounts',
+    color: 'violet',
+    icon: DollarSign,
+    index: 3,
+  },
 ];
 
 function getInitialView() {
@@ -49,7 +77,9 @@ const PAGE_TRANSITION = {
 export default function App() {
   const [currentView, setCurrentView]           = useState(getInitialView);
   const [playbooksOpen, setPlaybooksOpen]       = useState(false);
+  const [claudeImportOpen, setClaudeImportOpen] = useState(false);
   const [filters, setFilters]                   = useState({});
+  const [globalSearchQuery, setGlobalSearchQuery] = useState('');
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [modelInfo, setModelInfo]               = useState(null);
 
@@ -145,6 +175,10 @@ export default function App() {
           <TopBar
             onOpenPlaybooks={() => setPlaybooksOpen(true)}
             onSelectCustomer={setSelectedCustomer}
+            onOpenClaudeImport={() => setClaudeImportOpen(true)}
+            globalSearchQuery={globalSearchQuery}
+            onGlobalSearchChange={setGlobalSearchQuery}
+            modelInfo={modelInfo}
           />
           <RetentionPlaybooks
             open={playbooksOpen}
@@ -154,48 +188,50 @@ export default function App() {
             customer={selectedCustomer}
             onClose={() => setSelectedCustomer(null)}
           />
+          <ClaudeImportModal
+            isOpen={claudeImportOpen}
+            onClose={() => setClaudeImportOpen(false)}
+          />
 
-          <main className="ml-56 pt-14 min-h-screen">
-            <div className="p-6 space-y-4">
+          <main className="ml-56 pt-14 min-h-screen" id="main-content">
+            <div className="p-6 space-y-6">
 
-              {/* Alert banner */}
-              <AlertBanner />
-
-              {/* Filter bar */}
+              {/* 1. Top Bar Controls: Filters */}
               <FilterBar onFilterChange={setFilters} />
 
-              {/* KPI row */}
-              <div className="grid grid-cols-4 gap-4">
+              {/* 2. 4 KPI cards: Total Customers, Churn Rate, High-Risk Customers, Revenue at Risk */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 {KPI_CONFIG.map((kpi) => <KPICard key={kpi.label} {...kpi} />)}
               </div>
 
-              {/* Churn trend */}
-              <ChurnTrendChart />
+              {/* 3. AI Insight / Alert banner */}
+              <div className="space-y-4">
+                <AlertBanner />
+                <AIInsightCard onOpenPlaybooks={() => setPlaybooksOpen(true)} />
+              </div>
 
-              {/* Row 3: Gauge + charts + model */}
-              <div className="grid grid-cols-5 gap-4">
-                <ChurnGauge />
-                <RiskDistributionChart />
-                <ChurnBySegmentChart />
-                <PredictiveRadar />
+              {/* 4. Analytics carousel */}
+              <AnalyticsCarousel modelInfo={modelInfo} />
+
+              {/* 5. Top At-Risk Customers table */}
+              <CustomerTable
+                filters={filters}
+                onSelect={setSelectedCustomer}
+                globalSearch={globalSearchQuery}
+              />
+
+              {/* 6. Explainability / Feature Importance & Model Transparency section */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <FeatureImportanceChart featureImportance={modelInfo?.feature_importance} />
                 <ModelPerformancePanel modelInfo={modelInfo} />
               </div>
 
-              {/* Row 4: SHAP + cohort */}
-              <div className="grid grid-cols-2 gap-4">
-                <FeatureImportanceChart featureImportance={modelInfo?.feature_importance} />
-                <CohortHeatmap />
-              </div>
-
-              {/* Customer table */}
-              <CustomerTable filters={filters} onSelect={setSelectedCustomer} />
-
               {/* Footer */}
               <div className="flex items-center justify-between pt-2 pb-4">
-                <span className="text-[9px] font-mono text-dim uppercase tracking-widest">
+                <span className="text-[9px] font-mono text-slate-400 uppercase tracking-widest">
                   ChurnLens v2.4.1 · RandomForestClassifier (Accuracy: {modelInfo?.accuracy ?? 79.21}%) · ML Server: http://127.0.0.1:5000
                 </span>
-                <span className="text-[9px] font-mono text-dim">
+                <span className="text-[9px] font-mono text-slate-400">
                   Refreshes every 15 min · Next: 12:45 IST
                 </span>
               </div>

@@ -35,8 +35,8 @@ export default function ChurnBySegmentChart() {
       transition={{ duration: 0.45, delay: 0.45 }}
       className="panel border-border rounded-sm p-5"
     >
-      <div className="section-label mb-1">Churn by Segment</div>
-      <div className="text-sm font-bold text-white mb-4">Actual vs Predicted %</div>
+      <div className="section-label mb-1">Churn by segment</div>
+      <h3 className="text-xl font-bold text-slate-900 mb-4">Actual vs predicted churn rate</h3>
 
       <ResponsiveContainer width="100%" height={195}>
         <BarChart
@@ -69,18 +69,18 @@ export default function ChurnBySegmentChart() {
       </ResponsiveContainer>
 
       {/* Legend */}
-      <div className="flex items-center gap-4 mt-1 text-[9px] font-mono text-dim">
+      <div className="flex items-center gap-4 mt-2 text-[13px] font-mono text-slate-500">
         <span className="flex items-center gap-1.5">
-          <span className="w-2.5 h-2.5 rounded-sm bg-cyan/80 inline-block" />Actual
+          <span className="w-2.5 h-2.5 rounded-sm bg-sky-500 inline-block" />Actual
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="w-2.5 h-2.5 rounded-sm bg-violet/40 inline-block" />Predicted
+          <span className="w-2.5 h-2.5 rounded-sm bg-indigo-500/50 inline-block" />Predicted
         </span>
         <span className="flex items-center gap-1.5 ml-auto">
-          <span className="w-2 h-2 rounded-full bg-magenta inline-block" /> &gt;30%
+          <span className="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block" /> &gt;30%
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="w-2 h-2 rounded-full bg-amber inline-block" /> &gt;15%
+          <span className="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block" /> &gt;15%
         </span>
       </div>
     </motion.div>

@@ -4,32 +4,36 @@ export default {
   theme: {
     extend: {
       colors: {
-        void: '#000000',
-        surface: '#0A0A0A',
-        panel: '#111111',
-        border: '#1C1C1C',
-        muted: '#2A2A2A',
-        dim: '#444444',
-        subtle: '#888888',
+        // Light Theme Color Tokens
+        void: '#F4F7FB',        // Main body background
+        surface: '#FFFFFF',     // Headers & Card surfaces
+        panel: '#FFFFFF',       // Panel backgrounds
+        border: '#E2E8F0',      // Subtle borders (slate-200)
+        muted: '#CBD5E1',       // Muted background bars (slate-300)
+        dim: '#64748B',         // Secondary text (slate-500)
+        subtle: '#475569',      // Subtitle text (slate-600)
+        heading: '#0F172A',     // Primary heading text (slate-900)
+        
+        // Vibrant Accents Tuned for Light Background Contrast
         violet: {
-          DEFAULT: '#7C5CFF',
-          dim: '#4B38A8',
-          glow: 'rgba(124,92,255,0.15)',
+          DEFAULT: '#6366F1',   // Indigo 500
+          dim: '#4F46E5',       // Indigo 600
+          glow: 'rgba(99,102,241,0.12)',
         },
         cyan: {
-          DEFAULT: '#22F0D8',
-          dim: '#15917F',
-          glow: 'rgba(34,240,216,0.15)',
+          DEFAULT: '#0EA5E9',   // Sky 500
+          dim: '#0284C7',       // Sky 600
+          glow: 'rgba(14,165,233,0.12)',
         },
         magenta: {
-          DEFAULT: '#FF4FD8',
-          dim: '#992F81',
-          glow: 'rgba(255,79,216,0.15)',
+          DEFAULT: '#E11D48',   // Rose 600
+          dim: '#BE123C',       // Rose 700
+          glow: 'rgba(225,29,72,0.12)',
         },
         amber: {
-          DEFAULT: '#FFB84D',
-          dim: '#996E2E',
-          glow: 'rgba(255,184,77,0.15)',
+          DEFAULT: '#D97706',   // Amber 600
+          dim: '#B45309',       // Amber 700
+          glow: 'rgba(217,119,6,0.12)',
         },
       },
       fontFamily: {
@@ -38,8 +42,8 @@ export default {
       },
       backgroundImage: {
         'grid-void': `
-          linear-gradient(rgba(124,92,255,0.04) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(124,92,255,0.04) 1px, transparent 1px)
+          linear-gradient(rgba(99,102,241,0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(99,102,241,0.04) 1px, transparent 1px)
         `,
       },
       backgroundSize: {

@@ -12,10 +12,10 @@ export default function RiskDistributionChart() {
       transition={{ duration: 0.45, delay: 0.4 }}
       className="panel border-border rounded-sm p-5 flex flex-col"
     >
-      <div className="section-label mb-1">Risk Distribution</div>
-      <div className="text-sm font-bold text-white mb-4">
-        Customer Risk Buckets
-      </div>
+      <div className="section-label mb-1">Risk distribution</div>
+      <h3 className="text-xl font-bold text-slate-900 mb-4">
+        Customer risk distribution
+      </h3>
 
       {/* Stacked bar overview */}
       <div className="h-2 rounded-sm overflow-hidden flex mb-5">
@@ -37,17 +37,17 @@ export default function RiskDistributionChart() {
             <div className="flex items-center justify-between mb-1.5">
               <div className="flex items-center gap-2">
                 <span
-                  className="w-2 h-2 rounded-sm flex-shrink-0"
+                  className="w-2.5 h-2.5 rounded-sm flex-shrink-0"
                   style={{ backgroundColor: d.color }}
                 />
-                <span className="text-xs font-mono text-subtle">{d.label}</span>
+                <span className="text-sm font-mono text-slate-700 font-medium">{d.label}</span>
               </div>
               <div className="flex items-center gap-2 text-right">
-                <span className="text-xs font-bold text-white font-mono">{fmt.number(d.count)}</span>
-                <span className="text-[9px] font-mono text-dim w-8">{fmt.pct(d.pct)}</span>
+                <span className="text-sm font-bold text-slate-900 font-mono">{fmt.number(d.count)}</span>
+                <span className="text-[13px] font-mono text-slate-500 w-10">{fmt.pct(d.pct)}</span>
               </div>
             </div>
-            <div className="h-1.5 bg-muted rounded-sm overflow-hidden">
+            <div className="h-2 bg-slate-100 rounded-sm overflow-hidden border border-slate-200/60">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${d.pct}%` }}
@@ -61,9 +61,9 @@ export default function RiskDistributionChart() {
       </div>
 
       {/* Footer */}
-      <div className="mt-4 pt-3 border-t border-border flex items-center justify-between">
-        <span className="section-label">Total Customers</span>
-        <span className="text-sm font-bold text-white font-mono">{fmt.number(total)}</span>
+      <div className="mt-4 pt-3 border-t border-slate-200 flex items-center justify-between">
+        <span className="section-label">Total customers</span>
+        <span className="text-base font-bold text-slate-900 font-mono">{fmt.number(total)}</span>
       </div>
     </motion.div>
   );

@@ -4,10 +4,10 @@ import { SparklineChart } from './SparklineChart';
 import { useCountUp } from '../utils/useCountUp';
 
 const colorMap = {
-  violet:  { border: 'border-violet/25',  glow: 'glow-violet',  text: 'text-violet',  bg: 'bg-violet/10',  bar: 'bg-violet'  },
-  cyan:    { border: 'border-cyan/25',    glow: 'glow-cyan',    text: 'text-cyan',    bg: 'bg-cyan/10',    bar: 'bg-cyan'    },
-  magenta: { border: 'border-magenta/25', glow: 'glow-magenta', text: 'text-magenta', bg: 'bg-magenta/10', bar: 'bg-magenta' },
-  amber:   { border: 'border-amber/25',   glow: 'glow-amber',   text: 'text-amber',   bg: 'bg-amber/10',   bar: 'bg-amber'   },
+  violet:  { border: 'border-indigo-200', text: 'text-indigo-600', bg: 'bg-indigo-50', bar: 'bg-indigo-600' },
+  cyan:    { border: 'border-sky-200',    text: 'text-sky-600',    bg: 'bg-sky-50',    bar: 'bg-sky-600'    },
+  magenta: { border: 'border-rose-200',   text: 'text-rose-600',   bg: 'bg-rose-50',   bar: 'bg-rose-600'   },
+  amber:   { border: 'border-amber-200',  text: 'text-amber-600',  bg: 'bg-amber-50',  bar: 'bg-amber-600'  },
 };
 
 const SPARKLINES = {
@@ -18,10 +18,9 @@ const SPARKLINES = {
 };
 
 const STROKE_COLORS = {
-  violet: '#7C5CFF', cyan: '#22F0D8', magenta: '#FF4FD8', amber: '#FFB84D',
+  violet: '#6366F1', cyan: '#0EA5E9', magenta: '#E11D48', amber: '#D97706',
 };
 
-// Strip non-numeric prefix/suffix to get raw number for count-up
 function parseNumeric(val) {
   if (val == null) return null;
   const s = String(val);
@@ -29,8 +28,7 @@ function parseNumeric(val) {
   return m ? parseFloat(m[0].replace(/,/g, '')) : null;
 }
 
-function AnimatedValue({ value, color }) {
-  // Detect format: currency ($), percent (%), plain number
+function AnimatedValue({ value }) {
   const raw = String(value);
   const isPercent  = raw.endsWith('%');
   const isCurrency = raw.startsWith('$');
@@ -51,14 +49,14 @@ function AnimatedValue({ value, color }) {
   );
 
   return (
-    <span className="stat-value text-2xl text-white">
+    <span className="stat-value text-3xl sm:text-4xl text-slate-900">
       {numeric != null ? formatted : value}
     </span>
   );
 }
 
-export default function KPICard({ label, value, delta, deltaLabel, color, icon: Icon, index = 0 }) {
-  const isNegative = delta && (label.includes('Churn') || label.includes('Risk'));
+export default function KPICard({ label, value, delta, deltaLabel, context, color, icon: Icon, index = 0 }) {
+  const isNegative = delta && (label.toLowerCase().includes('churn') || label.toLowerCase().includes('risk'));
   const c = colorMap[color] || colorMap.violet;
 
   return (
@@ -66,34 +64,36 @@ export default function KPICard({ label, value, delta, deltaLabel, color, icon: 
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.08 }}
-      className={`panel ${c.border} ${c.glow} rounded-sm p-4 relative overflow-hidden`}
+      className={`panel ${c.border} rounded-md p-4 relative overflow-hidden bg-white shadow-xs flex flex-col justify-between`}
     >
-      <div className={`absolute top-0 left-0 right-0 h-[2px] ${c.bar} opacity-70`} />
+      <div className={`absolute top-0 left-0 right-0 h-1 ${c.bar}`} />
 
-      <div className="flex items-start justify-between mb-2">
-        <div className={`w-8 h-8 ${c.bg} border ${c.border} rounded-sm flex items-center justify-center`}>
-          <Icon size={15} className={c.text} />
-        </div>
-        {delta != null && (
-          <div className={`flex items-center gap-1 text-[10px] font-mono px-1.5 py-0.5 rounded-sm ${
-            isNegative ? 'bg-magenta/10 text-magenta' : 'bg-cyan/10 text-cyan'
-          }`}>
-            {isNegative ? <TrendingUp size={10} /> : <TrendingDown size={10} />}
-            {delta}
+      <div>
+        <div className="flex items-start justify-between mb-2.5">
+          <div className={`w-8 h-8 ${c.bg} border ${c.border} rounded-md flex items-center justify-center`}>
+            <Icon size={16} className={c.text} />
           </div>
-        )}
+          {delta != null && (
+            <div className={`flex items-center gap-1 text-xs font-mono font-bold px-2 py-0.5 rounded ${
+              isNegative ? 'bg-rose-50 text-rose-700 border border-rose-200' : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+            }`}>
+              {isNegative ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
+              {delta}
+            </div>
+          )}
+        </div>
+
+        <div className="mb-1">
+          <AnimatedValue value={value} />
+        </div>
+        <div className="text-sm font-semibold text-slate-700">{label}</div>
       </div>
 
-      <div className="mb-0.5">
-        <AnimatedValue value={value} color={color} />
-      </div>
-      <div className="section-label">{label}</div>
-      {deltaLabel && <div className="text-[9px] font-mono text-dim mt-0.5">{deltaLabel}</div>}
-
-      {/* Sparkline */}
-      <div className="mt-3 -mx-1">
-        <SparklineChart data={SPARKLINES[color] || []} color={STROKE_COLORS[color]} />
-      </div>
+      {(context || deltaLabel) && (
+        <div className="text-[13px] font-mono text-slate-500 mt-2 pt-2 border-t border-slate-100">
+          {context || deltaLabel}
+        </div>
+      )}
     </motion.div>
   );
 }

@@ -39,33 +39,33 @@ export default function ChurnTrendChart() {
       {/* Header */}
       <div className="flex items-center justify-between mb-5">
         <div>
-          <div className="section-label mb-1">Churn Rate Trend</div>
-          <div className="text-base font-bold text-white">Monthly Overview vs Forecast</div>
+          <div className="section-label mb-1">Churn rate trend</div>
+          <h3 className="text-xl font-bold text-slate-900">Monthly overview vs forecast</h3>
         </div>
         <div className="flex items-center gap-4">
           {/* Legend */}
-          <div className="hidden md:flex items-center gap-4 text-[10px] font-mono">
-            <span className="flex items-center gap-1.5 text-cyan">
-              <span className="w-3 h-0.5 bg-cyan inline-block rounded" />Actual
+          <div className="hidden md:flex items-center gap-4 text-[13px] font-mono">
+            <span className="flex items-center gap-1.5 text-sky-600 font-medium">
+              <span className="w-3 h-0.5 bg-sky-500 inline-block rounded" />Actual
             </span>
-            <span className="flex items-center gap-1.5 text-violet">
-              <span className="w-3 h-0.5 bg-violet inline-block rounded" />Predicted
+            <span className="flex items-center gap-1.5 text-indigo-600 font-medium">
+              <span className="w-3 h-0.5 bg-indigo-500 inline-block rounded" />Predicted
             </span>
-            <span className="flex items-center gap-1.5 text-amber">
-              <span className="w-3 h-0.5 bg-amber inline-block rounded" />15% threshold
+            <span className="flex items-center gap-1.5 text-amber-600 font-medium">
+              <span className="w-3 h-0.5 bg-amber-500 inline-block rounded" />15% threshold
             </span>
           </div>
 
           {/* Range toggle */}
-          <div className="flex items-center border border-border rounded-sm overflow-hidden">
+          <div className="flex items-center border border-slate-200 rounded-sm overflow-hidden bg-white">
             {RANGES.map((r) => (
               <button
                 key={r}
                 onClick={() => setRange(r)}
-                className={`px-2.5 py-1 text-[10px] font-mono transition-colors ${
+                className={`px-3 py-1 text-[13px] font-mono transition-colors ${
                   range === r
-                    ? 'bg-violet text-white'
-                    : 'text-dim hover:text-white hover:bg-white/5'
+                    ? 'bg-indigo-600 text-white font-bold'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                 }`}
               >
                 {r}

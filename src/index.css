@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -13,72 +13,77 @@
 
   html, body, #root {
     height: 100%;
-    background: #000000;
-    color: #E8E8E8;
+    background: #F4F7FB;
+    color: #1E293B;
     font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-size: 16px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   ::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
+    width: 6px;
+    height: 6px;
   }
-  ::-webkit-scrollbar-track { background: #0A0A0A; }
-  ::-webkit-scrollbar-thumb { background: #2A2A2A; border-radius: 2px; }
-  ::-webkit-scrollbar-thumb:hover { background: #7C5CFF; }
+  ::-webkit-scrollbar-track { background: #F1F5F9; }
+  ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #6366F1; }
 }
 
 @layer components {
   .panel {
-    @apply bg-panel border border-border;
+    @apply bg-white border border-slate-200 shadow-sm rounded-md;
   }
 
   .glow-violet {
-    box-shadow: 0 0 20px rgba(124, 92, 255, 0.2), inset 0 0 20px rgba(124, 92, 255, 0.03);
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.12), 0 1px 3px rgba(0, 0, 0, 0.05);
   }
   .glow-cyan {
-    box-shadow: 0 0 20px rgba(34, 240, 216, 0.2), inset 0 0 20px rgba(34, 240, 216, 0.03);
+    box-shadow: 0 4px 20px rgba(14, 165, 233, 0.12), 0 1px 3px rgba(0, 0, 0, 0.05);
   }
   .glow-magenta {
-    box-shadow: 0 0 20px rgba(255, 79, 216, 0.2), inset 0 0 20px rgba(255, 79, 216, 0.03);
+    box-shadow: 0 4px 20px rgba(225, 29, 72, 0.12), 0 1px 3px rgba(0, 0, 0, 0.05);
   }
   .glow-amber {
-    box-shadow: 0 0 20px rgba(255, 184, 77, 0.2), inset 0 0 20px rgba(255, 184, 77, 0.03);
+    box-shadow: 0 4px 20px rgba(217, 119, 6, 0.12), 0 1px 3px rgba(0, 0, 0, 0.05);
   }
 
   .badge-high {
-    @apply bg-magenta/10 text-magenta border border-magenta/30 text-xs font-mono px-2 py-0.5 rounded-sm uppercase tracking-widest;
+    @apply bg-rose-50 text-rose-700 border border-rose-200 text-[13px] font-mono font-semibold px-2.5 py-0.5 rounded capitalize tracking-normal;
   }
   .badge-medium {
-    @apply bg-amber/10 text-amber border border-amber/30 text-xs font-mono px-2 py-0.5 rounded-sm uppercase tracking-widest;
+    @apply bg-amber-50 text-amber-700 border border-amber-200 text-[13px] font-mono font-semibold px-2.5 py-0.5 rounded capitalize tracking-normal;
   }
   .badge-low {
-    @apply bg-cyan/10 text-cyan border border-cyan/30 text-xs font-mono px-2 py-0.5 rounded-sm uppercase tracking-widest;
+    @apply bg-sky-50 text-sky-700 border border-sky-200 text-[13px] font-mono font-semibold px-2.5 py-0.5 rounded capitalize tracking-normal;
   }
 
   .stat-value {
-    @apply font-bold tracking-tight leading-none;
+    @apply font-bold tracking-tight leading-none text-slate-900;
     font-variant-numeric: tabular-nums;
   }
 
   .section-label {
-    @apply text-[10px] font-mono uppercase tracking-[0.2em] text-dim;
+    @apply text-[13px] font-mono text-slate-500 font-semibold tracking-normal;
   }
 }
 
-/* Recharts overrides */
+/* Recharts overrides for Light Theme */
 .recharts-default-tooltip {
-  background: #111111 !important;
-  border: 1px solid #2A2A2A !important;
-  border-radius: 4px !important;
+  background: #FFFFFF !important;
+  border: 1px solid #CBD5E1 !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  padding: 8px 12px !important;
 }
 .recharts-tooltip-label {
-  color: #888888 !important;
+  color: #64748B !important;
   font-family: 'Space Mono', monospace !important;
-  font-size: 11px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
 }
 .recharts-tooltip-item {
   font-family: 'Space Grotesk', sans-serif !important;
-  font-size: 13px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
 }

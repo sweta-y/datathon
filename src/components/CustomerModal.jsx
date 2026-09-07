@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Phone, Mail, AlertTriangle, Zap, Clock, CheckCircle2, ShieldAlert } from 'lucide-react';
+import { X, Phone, Mail, Clock, CheckCircle2, ShieldAlert, Cpu } from 'lucide-react';
 import {
   AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid
 } from 'recharts';
 import { fmt } from '../utils/formatters';
 
-// Generate 6-month historical trajectory ending at the real computed churn probability
 function buildHistory(finalProb) {
   const p = typeof finalProb === 'number' ? finalProb : 50;
   return ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'].map((m, i) => {
@@ -20,9 +19,9 @@ function buildHistory(finalProb) {
 }
 
 function RiskColor(prob, pred) {
-  if (pred === 'Yes' || prob >= 70) return '#FF4FD8';
-  if (prob >= 40) return '#FFB84D';
-  return '#22F0D8';
+  if (pred === 'Yes' || prob >= 70) return '#E11D48'; // Rose/Magenta
+  if (prob >= 40) return '#D97706'; // Amber
+  return '#0EA5E9'; // Sky Cyan
 }
 
 export default function CustomerModal({ customer, onClose }) {
@@ -36,7 +35,6 @@ export default function CustomerModal({ customer, onClose }) {
       return;
     }
 
-    // Build payload matching dataset feature schema
     const payload = {
       gender: customer.gender || 'Female',
       SeniorCitizen: Number(customer.SeniorCitizen ?? 0),
@@ -99,12 +97,12 @@ export default function CustomerModal({ customer, onClose }) {
   const history = buildHistory(churnProb);
 
   const DRIVER_DETAILS = [
-    { label: 'Contract Type', val: customer.Contract || 'Month-to-month', score: customer.Contract === 'Month-to-month' ? 88 : customer.Contract === 'One year' ? 45 : 15, color: customer.Contract === 'Month-to-month' ? '#FF4FD8' : '#22F0D8' },
-    { label: 'Internet Service', val: customer.InternetService || 'Fiber optic', score: customer.InternetService === 'Fiber optic' ? 85 : customer.InternetService === 'DSL' ? 50 : 20, color: customer.InternetService === 'Fiber optic' ? '#FF4FD8' : '#22F0D8' },
-    { label: 'Tenure (months)', val: `${customer.tenure ?? 1} mo`, score: Math.max(10, 100 - (customer.tenure ?? 1) * 1.4), color: (customer.tenure ?? 1) < 12 ? '#FF4FD8' : '#22F0D8' },
-    { label: 'Payment Method', val: customer.PaymentMethod || 'Electronic check', score: customer.PaymentMethod === 'Electronic check' ? 78 : 30, color: customer.PaymentMethod === 'Electronic check' ? '#FFB84D' : '#22F0D8' },
-    { label: 'Tech Support', val: customer.TechSupport || 'No', score: customer.TechSupport === 'No' ? 75 : 20, color: customer.TechSupport === 'No' ? '#FFB84D' : '#22F0D8' },
-    { label: 'Monthly Charges', val: fmt.currency(customer.MonthlyCharges ?? 70), score: Math.min(100, (customer.MonthlyCharges ?? 70)), color: (customer.MonthlyCharges ?? 70) > 80 ? '#FFB84D' : '#22F0D8' },
+    { label: 'Contract Type', val: customer.Contract || 'Month-to-month', score: customer.Contract === 'Month-to-month' ? 88 : customer.Contract === 'One year' ? 45 : 15, color: customer.Contract === 'Month-to-month' ? '#E11D48' : '#0EA5E9' },
+    { label: 'Internet Service', val: customer.InternetService || 'Fiber optic', score: customer.InternetService === 'Fiber optic' ? 85 : customer.InternetService === 'DSL' ? 50 : 20, color: customer.InternetService === 'Fiber optic' ? '#E11D48' : '#0EA5E9' },
+    { label: 'Tenure (months)', val: `${customer.tenure ?? 1} mo`, score: Math.max(10, 100 - (customer.tenure ?? 1) * 1.4), color: (customer.tenure ?? 1) < 12 ? '#E11D48' : '#0EA5E9' },
+    { label: 'Payment Method', val: customer.PaymentMethod || 'Electronic check', score: customer.PaymentMethod === 'Electronic check' ? 78 : 30, color: customer.PaymentMethod === 'Electronic check' ? '#D97706' : '#0EA5E9' },
+    { label: 'Tech Support', val: customer.TechSupport || 'No', score: customer.TechSupport === 'No' ? 75 : 20, color: customer.TechSupport === 'No' ? '#D97706' : '#0EA5E9' },
+    { label: 'Monthly Charges', val: fmt.currency(customer.MonthlyCharges ?? 70), score: Math.min(100, (customer.MonthlyCharges ?? 70)), color: (customer.MonthlyCharges ?? 70) > 80 ? '#D97706' : '#0EA5E9' },
   ];
 
   return (
@@ -115,144 +113,137 @@ export default function CustomerModal({ customer, onClose }) {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
-        className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40"
+        className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40"
       />
       <motion.div
         key="modal"
-        initial={{ opacity: 0, scale: 0.96, y: 24 }}
+        initial={{ opacity: 0, scale: 0.96, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.96, y: 24 }}
-        transition={{ type: 'spring', damping: 28, stiffness: 280 }}
-        className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] max-h-[88vh] overflow-y-auto bg-surface border border-border rounded-sm shadow-2xl"
+        exit={{ opacity: 0, scale: 0.96, y: 20 }}
+        transition={{ type: 'spring', damping: 26, stiffness: 280 }}
+        className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] max-h-[88vh] overflow-y-auto bg-white border border-slate-200 rounded-lg shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-start justify-between px-6 py-4 border-b border-border sticky top-0 bg-surface z-10">
+        <div className="flex items-start justify-between px-6 py-4 border-b border-slate-200 sticky top-0 bg-white z-10">
           <div>
-            <div className="flex items-center gap-2 mb-0.5">
-              <span className="text-[9px] font-mono text-dim">{customer.id}</span>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-xs font-mono font-bold text-slate-500">{customer.id}</span>
               <span className={`badge-${isChurn ? 'high' : 'low'}`}>
                 {isChurn ? 'High Churn Risk' : 'Loyal Account'}
               </span>
-              <span className="text-[9px] font-mono text-cyan bg-cyan/10 border border-cyan/20 px-1.5 py-0.5 rounded-sm flex items-center gap-1">
-                <span className="w-1 h-1 rounded-full bg-cyan animate-pulse" />
-                Live API
+              <span className="text-[10px] font-mono text-sky-700 bg-sky-50 border border-sky-200 px-2 py-0.5 rounded flex items-center gap-1 font-semibold">
+                <span className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse" />
+                Live ML Inference
               </span>
             </div>
-            <h2 className="text-lg font-bold text-white">{customer.name}</h2>
-            <div className="text-[10px] font-mono text-dim mt-0.5">
-              {customer.segment} · LTV {fmt.currency(customer.ltv)} · Monthly: {fmt.currency(customer.MonthlyCharges ?? 70)}
+            <h2 className="text-xl font-bold text-slate-900 font-mono">Customer {customer.id}</h2>
+            <div className="text-xs font-mono text-slate-500 mt-0.5">
+              {customer.Contract} · Tenure: {customer.tenure} mo · Monthly: {fmt.currency(customer.MonthlyCharges ?? 70)} · Total Spend: {fmt.currency(customer.TotalCharges ?? 150)}
             </div>
           </div>
-          <button onClick={onClose} className="w-7 h-7 flex items-center justify-center border border-border rounded-sm text-dim hover:text-white hover:border-muted transition-colors mt-1">
-            <X size={13} />
+          <button onClick={onClose} className="w-8 h-8 rounded border border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-slate-100 flex items-center justify-center transition-colors cursor-pointer mt-1">
+            <X size={15} />
           </button>
         </div>
 
         <div className="px-6 py-5 space-y-5">
-          {/* Score + Real Inference Row */}
+          {/* Real Model Inference Row */}
           <div className="grid grid-cols-3 gap-3">
-            {/* Real Model Churn Probability */}
-            <div className="col-span-1 border rounded-sm p-3.5" style={{ borderColor: `${color}25`, background: `${color}07` }}>
+            {/* Churn Probability */}
+            <div className="col-span-1 border rounded-md p-4 bg-slate-50/50" style={{ borderColor: `${color}40` }}>
               <div className="flex items-center justify-between mb-2">
                 <div className="section-label">Churn Probability</div>
-                {loading && <span className="text-[9px] font-mono text-dim animate-pulse">Running ML...</span>}
+                {loading && <span className="text-[9px] font-mono text-slate-400 animate-pulse">Running ML...</span>}
               </div>
               <div className="text-4xl font-bold font-mono" style={{ color }}>
                 {churnProb}%
               </div>
-              <div className="text-[9px] font-mono text-dim mt-1">
-                RandomForest Inference
+              <div className="text-[10px] font-mono text-slate-500 mt-1 font-medium">
+                RandomForest Model Output
               </div>
-              <div className="mt-2 h-1 bg-muted rounded-sm overflow-hidden">
+              <div className="mt-2 h-1.5 bg-slate-200 rounded overflow-hidden">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${churnProb}%` }}
                   transition={{ duration: 0.8 }}
-                  className="h-full rounded-sm"
+                  className="h-full rounded"
                   style={{ backgroundColor: color }}
                 />
               </div>
             </div>
 
-            {/* Real Model Prediction & Confidence */}
-            <div className="border border-border rounded-sm p-3.5 bg-panel">
+            {/* Decision & Confidence */}
+            <div className="border border-slate-200 rounded-md p-4 bg-white shadow-2xs">
               <div className="section-label mb-2">ML Decision & Confidence</div>
               <div className="flex items-center gap-2 mb-1">
                 {isChurn ? (
-                  <ShieldAlert size={16} className="text-magenta" />
+                  <ShieldAlert size={18} className="text-rose-600" />
                 ) : (
-                  <CheckCircle2 size={16} className="text-cyan" />
+                  <CheckCircle2 size={18} className="text-sky-600" />
                 )}
                 <span className="text-base font-bold font-mono" style={{ color }}>
-                  Prediction: {prediction === 'Yes' ? 'WILL CHURN' : 'RETAINED'}
+                  {prediction === 'Yes' ? 'WILL CHURN' : 'RETAINED'}
                 </span>
               </div>
-              <div className="text-[10px] font-mono text-white mt-1">
-                Confidence: <strong className="text-cyan">{confidence}%</strong>
+              <div className="text-xs font-mono text-slate-700 mt-1 font-medium">
+                Confidence: <strong className="text-sky-600 font-bold">{confidence}%</strong>
               </div>
-              <div className="mt-2 flex items-center gap-1.5 text-[9px] font-mono text-dim">
-                <Clock size={10} className="text-amber" />
+              <div className="mt-2 flex items-center gap-1.5 text-[10px] font-mono text-slate-500">
+                <Clock size={11} className="text-amber-600" />
                 Est. Action Date: {fmt.shortDate(customer.predictedDate)}
               </div>
             </div>
 
-            {/* Quick Actions */}
-            <div className="border border-border rounded-sm p-3.5 bg-panel space-y-1.5">
-              <div className="section-label mb-1.5">Intervention</div>
-              <button className="w-full flex items-center gap-2 text-[10px] font-mono text-violet border border-violet/30 rounded-sm px-2 py-1 hover:bg-violet/10 transition-colors">
-                <Phone size={10} /> Call Account Lead
+            {/* Quick Intervention */}
+            <div className="border border-slate-200 rounded-md p-3.5 bg-white space-y-1.5">
+              <div className="section-label mb-1.5">Quick Interventions</div>
+              <button className="w-full flex items-center gap-2 text-xs font-mono font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 rounded px-2.5 py-1.5 hover:bg-indigo-100 transition-colors cursor-pointer">
+                <Phone size={12} /> Call Account Lead
               </button>
-              <button className="w-full flex items-center gap-2 text-[10px] font-mono text-cyan border border-cyan/30 rounded-sm px-2 py-1 hover:bg-cyan/10 transition-colors">
-                <Mail size={10} /> Email Discount (20%)
-              </button>
-              <button className="w-full flex items-center gap-2 text-[10px] font-mono text-magenta border border-magenta/30 rounded-sm px-2 py-1 hover:bg-magenta/10 transition-colors">
-                <Zap size={10} /> Deploy PB-04 Playbook
+              <button className="w-full flex items-center gap-2 text-xs font-mono font-bold text-sky-700 bg-sky-50 border border-sky-200 rounded px-2.5 py-1.5 hover:bg-sky-100 transition-colors cursor-pointer">
+                <Mail size={12} /> Email Discount (20%)
               </button>
             </div>
           </div>
 
           {/* Model Inference Payload Summary */}
-          <div className="border border-border rounded-sm p-3 bg-surface text-[10px] font-mono">
+          <div className="border border-slate-200 rounded-md p-3.5 bg-slate-50 font-mono text-xs">
             <div className="flex items-center justify-between mb-2">
               <span className="section-label">POST /predict Feature Vector</span>
-              <span className="text-dim text-[9px]">Endpoint: http://127.0.0.1:5000/predict</span>
+              <span className="text-slate-500 text-[10px]">Endpoint: http://127.0.0.1:5000/predict</span>
             </div>
-            <div className="grid grid-cols-4 gap-2 text-dim">
-              <div>Contract: <span className="text-white">{customer.Contract || 'Month-to-month'}</span></div>
-              <div>Internet: <span className="text-white">{customer.InternetService || 'Fiber optic'}</span></div>
-              <div>Tenure: <span className="text-white">{customer.tenure ?? 1} mo</span></div>
-              <div>Monthly: <span className="text-white">${customer.MonthlyCharges ?? 70.7}</span></div>
-              <div>Payment: <span className="text-white">{customer.PaymentMethod || 'Electronic check'}</span></div>
-              <div>Total: <span className="text-white">${customer.TotalCharges ?? 151.65}</span></div>
-              <div>Paperless: <span className="text-white">{customer.PaperlessBilling || 'Yes'}</span></div>
-              <div>Tech Support: <span className="text-white">{customer.TechSupport || 'No'}</span></div>
+            <div className="grid grid-cols-4 gap-2 text-slate-600">
+              <div>Contract: <span className="font-bold text-slate-900">{customer.Contract || 'Month-to-month'}</span></div>
+              <div>Internet: <span className="font-bold text-slate-900">{customer.InternetService || 'Fiber optic'}</span></div>
+              <div>Tenure: <span className="font-bold text-slate-900">{customer.tenure ?? 1} mo</span></div>
+              <div>Monthly: <span className="font-bold text-slate-900">${customer.MonthlyCharges ?? 70.7}</span></div>
+              <div>Payment: <span className="font-bold text-slate-900">{customer.PaymentMethod || 'Electronic check'}</span></div>
+              <div>Total: <span className="font-bold text-slate-900">${customer.TotalCharges ?? 151.65}</span></div>
+              <div>Paperless: <span className="font-bold text-slate-900">{customer.PaperlessBilling || 'Yes'}</span></div>
+              <div>Tech Support: <span className="font-bold text-slate-900">{customer.TechSupport || 'No'}</span></div>
             </div>
           </div>
 
-          {/* Score history chart */}
+          {/* Trajectory chart */}
           <div>
             <div className="section-label mb-2">Churn Risk Trajectory (6 Months)</div>
-            <div className="border border-border rounded-sm p-3 bg-panel">
+            <div className="border border-slate-200 rounded-md p-3 bg-white">
               <ResponsiveContainer width="100%" height={110}>
                 <AreaChart data={history} margin={{ top: 4, right: 4, left: -30, bottom: 0 }}>
                   <defs>
-                    <linearGradient id="scoreGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor={color} stopOpacity={0.3} />
+                    <linearGradient id="scoreGradLight" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor={color} stopOpacity={0.2} />
                       <stop offset="95%" stopColor={color} stopOpacity={0} />
                     </linearGradient>
                   </defs>
-                  <CartesianGrid stroke="#1C1C1C" strokeDasharray="3 3" vertical={false} />
-                  <XAxis dataKey="month" tick={{ fill: '#444', fontSize: 9, fontFamily: 'Space Mono' }} axisLine={false} tickLine={false} />
-                  <YAxis domain={[0, 100]} tick={{ fill: '#444', fontSize: 9 }} axisLine={false} tickLine={false} />
-                  <Tooltip
-                    contentStyle={{ background: '#111', border: '1px solid #1C1C1C', borderRadius: 2, fontSize: 11 }}
-                    labelStyle={{ color: '#666', fontFamily: 'Space Mono' }}
-                    itemStyle={{ color }}
-                  />
-                  <Area type="monotone" dataKey="score" stroke={color} strokeWidth={2} fill="url(#scoreGrad)"
+                  <CartesianGrid stroke="#F1F5F9" strokeDasharray="3 3" vertical={false} />
+                  <XAxis dataKey="month" tick={{ fill: '#64748B', fontSize: 10, fontFamily: 'Space Mono' }} axisLine={false} tickLine={false} />
+                  <YAxis domain={[0, 100]} tick={{ fill: '#64748B', fontSize: 10 }} axisLine={false} tickLine={false} />
+                  <Tooltip />
+                  <Area type="monotone" dataKey="score" stroke={color} strokeWidth={2} fill="url(#scoreGradLight)"
                     dot={{ fill: color, r: 3, strokeWidth: 0 }}
-                    activeDot={{ r: 5, fill: color, stroke: '#000', strokeWidth: 2 }}
+                    activeDot={{ r: 5, fill: color, stroke: '#FFFFFF', strokeWidth: 2 }}
                   />
                 </AreaChart>
               </ResponsiveContainer>
@@ -264,19 +255,19 @@ export default function CustomerModal({ customer, onClose }) {
             <div className="section-label mb-2">Key Risk Factors (Model Inputs)</div>
             <div className="grid grid-cols-2 gap-2">
               {DRIVER_DETAILS.map((d) => (
-                <div key={d.label} className="border border-border rounded-sm p-2.5 bg-panel">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-[9px] font-mono text-dim">{d.label}</span>
-                    <span className="text-[10px] font-bold font-mono text-white">
+                <div key={d.label} className="border border-slate-200 rounded-md p-3 bg-white">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-[10px] font-mono font-semibold text-slate-500">{d.label}</span>
+                    <span className="text-xs font-bold font-mono text-slate-900">
                       {d.val}
                     </span>
                   </div>
-                  <div className="h-1 bg-muted rounded-sm overflow-hidden">
+                  <div className="h-1.5 bg-slate-100 rounded overflow-hidden">
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: `${d.score}%` }}
                       transition={{ duration: 0.6 }}
-                      className="h-full rounded-sm"
+                      className="h-full rounded"
                       style={{ backgroundColor: d.color }}
                     />
                   </div>
