@@ -43,7 +43,7 @@ export default function ClaudeImportModal({ isOpen, onClose }) {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
-        className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+        className="fixed inset-0 bg-slate-400/25 backdrop-blur-sm z-50 flex items-center justify-center p-4"
       >
         <motion.div
           key="modal"
@@ -55,12 +55,12 @@ export default function ClaudeImportModal({ isOpen, onClose }) {
           role="dialog"
           aria-modal="true"
           aria-labelledby="claude-modal-title"
-          className="w-full max-w-xl bg-white border border-slate-200 rounded-lg shadow-2xl overflow-hidden"
+          className="w-full max-w-xl max-h-[calc(100vh-2rem)] bg-white border border-slate-200 rounded-lg shadow-2xl overflow-hidden flex flex-col"
         >
           {/* Top Bar */}
           <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-slate-50/80">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-md bg-indigo-600 text-white flex items-center justify-center shadow-sm">
+              <div className="w-8 h-8 rounded-md bg-sky-600 text-white flex items-center justify-center shadow-sm">
                 <Sparkles size={16} />
               </div>
               <div>
@@ -81,8 +81,8 @@ export default function ClaudeImportModal({ isOpen, onClose }) {
           </div>
 
           {/* Body */}
-          <div className="p-6 space-y-4 text-xs">
-            <div className="p-3 bg-indigo-50/70 border border-indigo-100 rounded-md text-slate-700 leading-relaxed">
+          <div className="p-6 space-y-4 text-xs overflow-y-auto min-h-0">
+            <div className="p-3 bg-sky-50/70 border border-sky-100 rounded-md text-slate-700 leading-relaxed">
               Paste customer feature JSON structured by <strong>Claude AI</strong> or exported from your CRM. The model will automatically parse features against the 19-attribute Random Forest schema.
             </div>
 
@@ -94,7 +94,7 @@ export default function ClaudeImportModal({ isOpen, onClose }) {
                 <button
                   type="button"
                   onClick={() => setInputText(SAMPLE_JSON)}
-                  className="text-indigo-600 hover:underline cursor-pointer"
+                  className="text-sky-700 hover:underline cursor-pointer"
                 >
                   Load Sample Format
                 </button>
@@ -107,7 +107,7 @@ export default function ClaudeImportModal({ isOpen, onClose }) {
                   setStatus('idle');
                 }}
                 placeholder="Paste JSON array or object here..."
-                className="w-full bg-slate-50 border border-slate-300 rounded-md p-3 font-mono text-xs text-slate-800 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+                className="w-full bg-slate-50 border border-slate-300 rounded-md p-3 font-mono text-xs text-slate-800 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-200 transition-all"
               />
             </div>
 
@@ -137,14 +137,14 @@ export default function ClaudeImportModal({ isOpen, onClose }) {
           </div>
 
           {/* Footer Actions */}
-          <div className="flex items-center justify-between px-6 py-4 border-t border-slate-200 bg-slate-50/80">
+          <div className="flex items-center justify-between gap-3 flex-wrap px-6 py-4 border-t border-slate-200 bg-slate-50/80">
             <button
               onClick={onClose}
               className="px-4 py-2 text-xs font-mono text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
             >
               Cancel
             </button>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap justify-end">
               <button
                 onClick={handleParse}
                 className="px-4 py-2 text-xs font-mono font-medium text-slate-700 bg-white border border-slate-300 hover:bg-slate-100 rounded transition-colors cursor-pointer"
@@ -158,7 +158,7 @@ export default function ClaudeImportModal({ isOpen, onClose }) {
                   alert(`Imported ${parsedCount} customer records cleanly! Integration structure ready.`);
                   onClose();
                 }}
-                className="px-5 py-2 text-xs font-mono font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="px-5 py-2 text-xs font-mono font-bold text-slate-700 bg-white border border-sky-300 hover:bg-sky-50 rounded transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
                 <UploadCloud size={14} />
                 <span>Import Dataset</span>

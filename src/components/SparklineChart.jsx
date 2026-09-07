@@ -6,7 +6,7 @@ export function SparklineChart({ data, color }) {
     <ResponsiveContainer width="100%" height={36}>
       <LineChart data={chartData} margin={{ top: 2, right: 2, left: 2, bottom: 2 }}>
         <Tooltip
-          contentStyle={{ background: '#111', border: '1px solid #1C1C1C', borderRadius: 2, fontSize: 10 }}
+          contentStyle={{ background: '#FFFFFF', border: '1px solid #CBD5E1', borderRadius: 2, fontSize: 10, color: '#334155' }}
           itemStyle={{ color }}
           labelFormatter={() => ''}
           formatter={(v) => [v.toLocaleString(), '']}
@@ -17,7 +17,7 @@ export function SparklineChart({ data, color }) {
           stroke={color}
           strokeWidth={1.5}
           dot={false}
-          activeDot={{ r: 3, fill: color, stroke: '#000', strokeWidth: 1 }}
+          activeDot={{ r: 3, fill: color, stroke: '#FFFFFF', strokeWidth: 1 }}
         />
       </LineChart>
     </ResponsiveContainer>

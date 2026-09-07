@@ -13,7 +13,7 @@ const CustomTooltip = ({ active, payload, label }) => {
       {payload.map((entry) => (
         <div key={entry.name} className="flex items-center justify-between gap-4 text-xs">
           <span style={{ color: entry.color }} className="font-mono">{entry.name}</span>
-          <span className="font-bold text-white">{entry.value?.toFixed(1)}%</span>
+          <span className="font-bold text-slate-800">{entry.value?.toFixed(1)}%</span>
         </div>
       ))}
     </div>
@@ -22,9 +22,9 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 // Color by risk level based on actual churn rate
 function getBarColor(value) {
-  if (value > 30) return '#FF4FD8';
-  if (value > 15) return '#FFB84D';
-  return '#22F0D8';
+  if (value > 30) return '#E11D48';
+  if (value > 15) return '#D97706';
+  return '#059669';
 }
 
 export default function ChurnBySegmentChart() {
@@ -45,36 +45,36 @@ export default function ChurnBySegmentChart() {
           barGap={2}
           barCategoryGap="28%"
         >
-          <CartesianGrid stroke="#1C1C1C" strokeDasharray="3 3" vertical={false} />
+          <CartesianGrid stroke="#E2E8F0" strokeDasharray="3 3" vertical={false} />
           <XAxis
             dataKey="segment"
-            tick={{ fill: '#444', fontSize: 9, fontFamily: 'Space Mono' }}
+            tick={{ fill: '#64748B', fontSize: 9, fontFamily: 'Space Mono' }}
             axisLine={false}
             tickLine={false}
           />
           <YAxis
-            tick={{ fill: '#444', fontSize: 9, fontFamily: 'Space Mono' }}
+            tick={{ fill: '#64748B', fontSize: 9, fontFamily: 'Space Mono' }}
             axisLine={false}
             tickLine={false}
             tickFormatter={(v) => `${v}%`}
           />
-          <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.03)' }} />
+          <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(14,165,233,0.06)' }} />
           <Bar dataKey="actual" name="Actual" radius={[2, 2, 0, 0]}>
             {churnBySegment.map((entry, i) => (
               <Cell key={i} fill={getBarColor(entry.actual)} fillOpacity={0.85} />
             ))}
           </Bar>
-          <Bar dataKey="predicted" name="Predicted" fill="#7C5CFF" fillOpacity={0.4} radius={[2, 2, 0, 0]} />
+          <Bar dataKey="predicted" name="Predicted" fill="#0284C7" fillOpacity={0.35} radius={[2, 2, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
 
       {/* Legend */}
-      <div className="flex items-center gap-4 mt-2 text-[13px] font-mono text-slate-500">
+      <div className="flex items-center gap-4 mt-2 flex-wrap text-[13px] font-mono text-slate-500">
         <span className="flex items-center gap-1.5">
           <span className="w-2.5 h-2.5 rounded-sm bg-sky-500 inline-block" />Actual
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="w-2.5 h-2.5 rounded-sm bg-indigo-500/50 inline-block" />Predicted
+          <span className="w-2.5 h-2.5 rounded-sm bg-sky-600/50 inline-block" />Predicted
         </span>
         <span className="flex items-center gap-1.5 ml-auto">
           <span className="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block" /> &gt;30%

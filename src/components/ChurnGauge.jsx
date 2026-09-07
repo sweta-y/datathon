@@ -7,14 +7,14 @@ const churnRate = kpis.churnRate;
 const retainRate = 100 - churnRate;
 
 const data = [
-  { name: 'Churned', value: churnRate, color: '#FF4FD8' },
-  { name: 'Retained', value: retainRate, color: '#1C1C1C' },
+  { name: 'Churned', value: churnRate, color: '#E11D48' },
+  { name: 'Retained', value: retainRate, color: '#E2E8F0' },
 ];
 
 function getRiskLabel(rate) {
-  if (rate >= 25) return { label: 'CRITICAL', color: '#FF4FD8' };
-  if (rate >= 15) return { label: 'HIGH', color: '#FFB84D' };
-  return { label: 'MODERATE', color: '#22F0D8' };
+  if (rate >= 25) return { label: 'CRITICAL', color: '#E11D48' };
+  if (rate >= 15) return { label: 'HIGH', color: '#D97706' };
+  return { label: 'MODERATE', color: '#059669' };
 }
 
 export default function ChurnGauge() {
@@ -28,7 +28,7 @@ export default function ChurnGauge() {
       className="panel border-border rounded-sm p-5 flex flex-col items-center justify-center"
     >
       <div className="section-label mb-1 self-start">Overall Churn Rate</div>
-      <div className="text-sm font-bold text-white mb-3 self-start">Live Gauge</div>
+      <div className="text-sm font-bold text-slate-800 mb-3 self-start">Live Gauge</div>
 
       <div className="relative w-full" style={{ height: 160 }}>
         <ResponsiveContainer width="100%" height={160}>
@@ -70,12 +70,12 @@ export default function ChurnGauge() {
 
       {/* Stats row */}
       <div className="w-full grid grid-cols-2 gap-2 mt-3">
-        <div className="text-center p-2 border border-magenta/20 rounded-sm bg-magenta/5">
-          <div className="text-base font-bold text-magenta font-mono">{churnRate}%</div>
+        <div className="text-center p-2 border border-rose-200 rounded-sm bg-rose-50">
+          <div className="text-base font-bold text-rose-600 font-mono">{churnRate}%</div>
           <div className="text-[9px] font-mono text-dim">Churn Rate</div>
         </div>
-        <div className="text-center p-2 border border-cyan/20 rounded-sm bg-cyan/5">
-          <div className="text-base font-bold text-cyan font-mono">{retainRate.toFixed(1)}%</div>
+        <div className="text-center p-2 border border-emerald-200 rounded-sm bg-emerald-50">
+          <div className="text-base font-bold text-emerald-600 font-mono">{retainRate.toFixed(1)}%</div>
           <div className="text-[9px] font-mono text-dim">Retention</div>
         </div>
       </div>
@@ -83,13 +83,13 @@ export default function ChurnGauge() {
       {/* Threshold markers */}
       <div className="w-full mt-3 pt-3 border-t border-border">
         {[
-          { label: 'Target ≤10%', color: '#22F0D8', ok: churnRate <= 10 },
-          { label: 'Warning ≤15%', color: '#FFB84D', ok: churnRate <= 15 },
-          { label: 'Critical >20%', color: '#FF4FD8', ok: churnRate > 20 },
+          { label: 'Target ≤10%', color: '#059669', ok: churnRate <= 10 },
+          { label: 'Warning ≤15%', color: '#D97706', ok: churnRate <= 15 },
+          { label: 'Critical >20%', color: '#E11D48', ok: churnRate > 20 },
         ].map((t) => (
           <div key={t.label} className="flex items-center justify-between text-[9px] font-mono py-0.5">
             <span className="text-dim">{t.label}</span>
-            <span style={{ color: t.ok ? t.color : '#444' }}>{t.ok ? '▲ Active' : '○ Clear'}</span>
+            <span style={{ color: t.ok ? t.color : '#94A3B8' }}>{t.ok ? '▲ Active' : '○ Clear'}</span>
           </div>
         ))}
       </div>

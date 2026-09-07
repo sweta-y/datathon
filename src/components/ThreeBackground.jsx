@@ -14,7 +14,7 @@ export default function ThreeBackground() {
 
     // Scene & Camera
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x000000, 0.06);
+    scene.fog = new THREE.FogExp2(0xF7FAFC, 0.035);
 
     const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 100);
     camera.position.z = isMobile ? 9.5 : 8;
@@ -28,7 +28,7 @@ export default function ThreeBackground() {
     // 1. Inner Geometric Shape (Icosahedron with Cyan wireframe)
     const innerGeo = new THREE.IcosahedronGeometry(isMobile ? 2.0 : 2.4, 1);
     const innerMat = new THREE.MeshBasicMaterial({
-      color: 0x22F0D8,
+      color: 0x0EA5E9,
       wireframe: true,
       transparent: true,
       opacity: 0.7,
@@ -39,7 +39,7 @@ export default function ThreeBackground() {
     // 2. Outer Geometric Shape (Violet wireframe, simplified detail = 1)
     const outerGeo = new THREE.IcosahedronGeometry(isMobile ? 3.0 : 3.5, 1);
     const outerMat = new THREE.MeshBasicMaterial({
-      color: 0x7C5CFF,
+      color: 0x0284C7,
       wireframe: true,
       transparent: true,
       opacity: 0.3,
@@ -50,7 +50,7 @@ export default function ThreeBackground() {
     // 3. Glowing Center Core (Torus ring, reduced segments 12x48 for performance)
     const torusGeo = new THREE.TorusGeometry(isMobile ? 1.3 : 1.6, 0.05, 12, 48);
     const torusMat = new THREE.MeshBasicMaterial({
-      color: 0xFF4FD8,
+      color: 0xE11D48,
       transparent: true,
       opacity: 0.75,
     });
@@ -64,10 +64,10 @@ export default function ThreeBackground() {
     const colors = new Float32Array(particleCount * 3);
 
     const colorPalette = [
-      new THREE.Color(0x7C5CFF), // Violet
-      new THREE.Color(0x22F0D8), // Cyan
-      new THREE.Color(0xFF4FD8), // Magenta
-      new THREE.Color(0xFFB84D), // Amber
+      new THREE.Color(0x0284C7), // Primary blue
+      new THREE.Color(0x0EA5E9), // Sky blue
+      new THREE.Color(0xE11D48), // Danger red
+      new THREE.Color(0xD97706), // Warning amber
     ];
 
     for (let i = 0; i < particleCount; i++) {

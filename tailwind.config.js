@@ -5,7 +5,7 @@ export default {
     extend: {
       colors: {
         // Light Theme Color Tokens
-        void: '#F4F7FB',        // Main body background
+        void: '#F7FAFC',        // Main body background
         surface: '#FFFFFF',     // Headers & Card surfaces
         panel: '#FFFFFF',       // Panel backgrounds
         border: '#E2E8F0',      // Subtle borders (slate-200)
@@ -16,9 +16,9 @@ export default {
         
         // Vibrant Accents Tuned for Light Background Contrast
         violet: {
-          DEFAULT: '#6366F1',   // Indigo 500
-          dim: '#4F46E5',       // Indigo 600
-          glow: 'rgba(99,102,241,0.12)',
+          DEFAULT: '#0284C7',   // Sky 600
+          dim: '#0369A1',       // Sky 700
+          glow: 'rgba(2,132,199,0.12)',
         },
         cyan: {
           DEFAULT: '#0EA5E9',   // Sky 500
@@ -42,8 +42,8 @@ export default {
       },
       backgroundImage: {
         'grid-void': `
-          linear-gradient(rgba(99,102,241,0.04) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(99,102,241,0.04) 1px, transparent 1px)
+          linear-gradient(rgba(14,165,233,0.06) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(14,165,233,0.06) 1px, transparent 1px)
         `,
       },
       backgroundSize: {

@@ -5,13 +5,13 @@ import { fmt } from '../utils/formatters';
 import { AlertTriangle, ExternalLink, ChevronRight, ChevronsUpDown, ChevronUp, ChevronDown, ChevronLeft } from 'lucide-react';
 
 function ScoreBadge({ score }) {
-  let color = '#0EA5E9'; // Sky cyan
-  let bg = 'bg-sky-50 text-sky-700 border-sky-200';
+  let color = '#059669'; // Emerald low risk
+  let bg = 'bg-emerald-50 text-emerald-700 border-emerald-200';
   if (score >= 80) {
-    color = '#E11D48'; // Rose/Magenta
+    color = '#E11D48'; // Rose high risk
     bg = 'bg-rose-50 text-rose-700 border-rose-200';
   } else if (score >= 60) {
-    color = '#D97706'; // Amber
+    color = '#D97706'; // Amber medium risk
     bg = 'bg-amber-50 text-amber-700 border-amber-200';
   }
 
@@ -40,8 +40,8 @@ const COLUMNS = [
 function SortIcon({ col, sort }) {
   if (sort.key !== col) return <ChevronsUpDown size={11} className="text-slate-400" />;
   return sort.dir === 'asc'
-    ? <ChevronUp size={11} className="text-indigo-600 font-bold" />
-    : <ChevronDown size={11} className="text-indigo-600 font-bold" />;
+    ? <ChevronUp size={11} className="text-sky-600 font-bold" />
+    : <ChevronDown size={11} className="text-sky-600 font-bold" />;
 }
 
 export default function CustomerTable({ filters, onSelect, globalSearch = '' }) {
@@ -112,13 +112,13 @@ export default function CustomerTable({ filters, onSelect, globalSearch = '' }) 
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, delay: 0.3 }}
-      className="panel border border-slate-200 rounded-md overflow-hidden bg-white shadow-xs"
+      className="panel border border-slate-200 rounded-md overflow-x-auto bg-white shadow-xs"
     >
       {/* Header */}
-      <div className="px-5 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50/50">
-        <div>
+      <div className="px-5 py-4 border-b border-slate-200 flex items-center justify-between gap-3 flex-wrap bg-slate-50/50">
+        <div className="min-w-0">
           <div className="section-label mb-0.5">High severity accounts</div>
-          <div className="text-lg font-bold text-slate-900 flex items-center gap-2">
+          <div className="text-lg font-bold text-slate-900 flex items-center gap-2 flex-wrap">
             At-risk customer directory
             <span className="bg-rose-50 text-rose-700 border border-rose-200 text-[13px] font-mono font-bold px-2 py-0.5 rounded">
               <AlertTriangle size={10} className="inline mr-1" />{data.length} matched
@@ -127,21 +127,21 @@ export default function CustomerTable({ filters, onSelect, globalSearch = '' }) 
         </div>
         <button
           onClick={() => alert(`Exporting ${data.length} records to CSV...`)}
-          className="flex items-center gap-1.5 text-[13px] font-mono font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 px-3 py-1.5 rounded hover:bg-indigo-100 transition-colors cursor-pointer"
+          className="flex items-center gap-1.5 text-[13px] font-mono font-bold text-sky-700 bg-sky-50 border border-sky-200 px-3 py-1.5 rounded hover:bg-sky-100 transition-colors cursor-pointer"
         >
           Export CSV <ExternalLink size={12} />
         </button>
       </div>
 
       {/* Column headers — sortable */}
-      <div className={`grid ${GRID} gap-3 px-5 py-3 border-b border-slate-200 bg-slate-100/70`}>
+      <div className={`grid ${GRID} min-w-[760px] gap-3 px-5 py-3 border-b border-slate-200 bg-slate-100/70`}>
         {COLUMNS.map((col) => (
           <button
             key={col.key}
             onClick={() => col.sortable && toggleSort(col.key)}
             className={`flex items-center gap-1 text-[13px] font-mono font-semibold text-left transition-colors ${
-              col.sortable ? 'hover:text-indigo-600 cursor-pointer' : 'cursor-default'
-            } ${sort.key === col.key ? 'text-indigo-700' : 'text-slate-600'}`}
+              col.sortable ? 'hover:text-sky-600 cursor-pointer' : 'cursor-default'
+            } ${sort.key === col.key ? 'text-sky-700' : 'text-slate-600'}`}
           >
             {col.label}
             {col.sortable && <SortIcon col={col.key} sort={sort} />}
@@ -163,11 +163,11 @@ export default function CustomerTable({ filters, onSelect, globalSearch = '' }) 
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.2, delay: i * 0.02 }}
               onClick={() => onSelect?.(c)}
-              className={`grid ${GRID} gap-3 px-5 py-3.5 items-center hover:bg-indigo-50/40 transition-colors group cursor-pointer ${
+              className={`grid ${GRID} min-w-[760px] gap-3 px-5 py-3.5 items-center hover:bg-sky-50/60 transition-colors group cursor-pointer ${
                 i % 2 === 0 ? 'bg-white' : 'bg-slate-50/30'
               }`}
             >
-              <span className="text-sm font-mono font-bold text-indigo-700">{c.id}</span>
+              <span className="text-sm font-mono font-bold text-sky-700">{c.id}</span>
               <span className="text-sm font-mono text-slate-800">{c.Contract}</span>
               <span className="text-sm font-mono text-slate-600">{c.tenure} mo</span>
               <span className="text-sm font-mono text-slate-800">{fmt.currency(c.MonthlyCharges)}</span>
@@ -175,7 +175,7 @@ export default function CustomerTable({ filters, onSelect, globalSearch = '' }) 
               <ScoreBadge score={c.score} />
               <div className="flex items-center justify-between">
                 <span className={`badge-${c.risk}`}>{c.risk}</span>
-                <ChevronRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600" />
+                <ChevronRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity text-sky-600" />
               </div>
             </motion.div>
           ))
@@ -183,9 +183,9 @@ export default function CustomerTable({ filters, onSelect, globalSearch = '' }) 
       </div>
 
       {/* Footer & Pagination Controls */}
-      <div className="px-5 py-3.5 border-t border-slate-200 bg-slate-50 flex items-center justify-between text-[13px] font-mono">
-        <span className="text-slate-600 font-medium">
-          Showing <strong className="text-slate-900">{pageData.length}</strong> of <strong className="text-slate-900">{data.length}</strong> accounts · Page <strong className="text-indigo-600">{currentPage}</strong> of <strong className="text-slate-900">{totalPages}</strong>
+      <div className="px-5 py-3.5 border-t border-slate-200 bg-slate-50 flex items-center justify-between gap-3 flex-wrap text-[13px] font-mono">
+        <span className="text-slate-600 font-medium min-w-0">
+          Showing <strong className="text-slate-900">{pageData.length}</strong> of <strong className="text-slate-900">{data.length}</strong> accounts · Page <strong className="text-sky-700">{currentPage}</strong> of <strong className="text-slate-900">{totalPages}</strong>
         </span>
 
         {/* Pagination buttons */}
@@ -205,7 +205,7 @@ export default function CustomerTable({ filters, onSelect, globalSearch = '' }) 
                 onClick={() => setCurrentPage(p)}
                 className={`w-6 h-6 rounded text-[13px] font-bold transition-colors cursor-pointer ${
                   currentPage === p
-                    ? 'bg-indigo-600 text-white'
+                    ? 'bg-sky-600 text-white'
                     : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-100'
                 }`}
               >

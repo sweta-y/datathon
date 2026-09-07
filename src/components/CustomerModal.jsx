@@ -21,7 +21,7 @@ function buildHistory(finalProb) {
 function RiskColor(prob, pred) {
   if (pred === 'Yes' || prob >= 70) return '#E11D48'; // Rose/Magenta
   if (prob >= 40) return '#D97706'; // Amber
-  return '#0EA5E9'; // Sky Cyan
+  return '#059669'; // Emerald low risk
 }
 
 export default function CustomerModal({ customer, onClose }) {
@@ -97,12 +97,12 @@ export default function CustomerModal({ customer, onClose }) {
   const history = buildHistory(churnProb);
 
   const DRIVER_DETAILS = [
-    { label: 'Contract Type', val: customer.Contract || 'Month-to-month', score: customer.Contract === 'Month-to-month' ? 88 : customer.Contract === 'One year' ? 45 : 15, color: customer.Contract === 'Month-to-month' ? '#E11D48' : '#0EA5E9' },
-    { label: 'Internet Service', val: customer.InternetService || 'Fiber optic', score: customer.InternetService === 'Fiber optic' ? 85 : customer.InternetService === 'DSL' ? 50 : 20, color: customer.InternetService === 'Fiber optic' ? '#E11D48' : '#0EA5E9' },
-    { label: 'Tenure (months)', val: `${customer.tenure ?? 1} mo`, score: Math.max(10, 100 - (customer.tenure ?? 1) * 1.4), color: (customer.tenure ?? 1) < 12 ? '#E11D48' : '#0EA5E9' },
-    { label: 'Payment Method', val: customer.PaymentMethod || 'Electronic check', score: customer.PaymentMethod === 'Electronic check' ? 78 : 30, color: customer.PaymentMethod === 'Electronic check' ? '#D97706' : '#0EA5E9' },
-    { label: 'Tech Support', val: customer.TechSupport || 'No', score: customer.TechSupport === 'No' ? 75 : 20, color: customer.TechSupport === 'No' ? '#D97706' : '#0EA5E9' },
-    { label: 'Monthly Charges', val: fmt.currency(customer.MonthlyCharges ?? 70), score: Math.min(100, (customer.MonthlyCharges ?? 70)), color: (customer.MonthlyCharges ?? 70) > 80 ? '#D97706' : '#0EA5E9' },
+    { label: 'Contract Type', val: customer.Contract || 'Month-to-month', score: customer.Contract === 'Month-to-month' ? 88 : customer.Contract === 'One year' ? 45 : 15, color: customer.Contract === 'Month-to-month' ? '#E11D48' : '#059669' },
+    { label: 'Internet Service', val: customer.InternetService || 'Fiber optic', score: customer.InternetService === 'Fiber optic' ? 85 : customer.InternetService === 'DSL' ? 50 : 20, color: customer.InternetService === 'Fiber optic' ? '#E11D48' : '#059669' },
+    { label: 'Tenure (months)', val: `${customer.tenure ?? 1} mo`, score: Math.max(10, 100 - (customer.tenure ?? 1) * 1.4), color: (customer.tenure ?? 1) < 12 ? '#E11D48' : '#059669' },
+    { label: 'Payment Method', val: customer.PaymentMethod || 'Electronic check', score: customer.PaymentMethod === 'Electronic check' ? 78 : 30, color: customer.PaymentMethod === 'Electronic check' ? '#D97706' : '#059669' },
+    { label: 'Tech Support', val: customer.TechSupport || 'No', score: customer.TechSupport === 'No' ? 75 : 20, color: customer.TechSupport === 'No' ? '#D97706' : '#059669' },
+    { label: 'Monthly Charges', val: fmt.currency(customer.MonthlyCharges ?? 70), score: Math.min(100, (customer.MonthlyCharges ?? 70)), color: (customer.MonthlyCharges ?? 70) > 80 ? '#D97706' : '#059669' },
   ];
 
   return (
@@ -113,7 +113,7 @@ export default function CustomerModal({ customer, onClose }) {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
-        className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40"
+        className="fixed inset-0 bg-slate-400/25 backdrop-blur-sm z-40"
       />
       <motion.div
         key="modal"
@@ -121,13 +121,13 @@ export default function CustomerModal({ customer, onClose }) {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.96, y: 20 }}
         transition={{ type: 'spring', damping: 26, stiffness: 280 }}
-        className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] max-h-[88vh] overflow-y-auto bg-white border border-slate-200 rounded-lg shadow-2xl"
+        className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] max-w-[calc(100vw-2rem)] max-h-[88vh] overflow-y-auto bg-white border border-slate-200 rounded-lg shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-start justify-between px-6 py-4 border-b border-slate-200 sticky top-0 bg-white z-10">
-          <div>
-            <div className="flex items-center gap-2 mb-1">
+        <div className="flex items-start justify-between gap-3 px-6 py-4 border-b border-slate-200 sticky top-0 bg-white z-10">
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center gap-2 mb-1 flex-wrap">
               <span className="text-xs font-mono font-bold text-slate-500">{customer.id}</span>
               <span className={`badge-${isChurn ? 'high' : 'low'}`}>
                 {isChurn ? 'High Churn Risk' : 'Loyal Account'}
@@ -137,8 +137,8 @@ export default function CustomerModal({ customer, onClose }) {
                 Live ML Inference
               </span>
             </div>
-            <h2 className="text-xl font-bold text-slate-900 font-mono">Customer {customer.id}</h2>
-            <div className="text-xs font-mono text-slate-500 mt-0.5">
+            <h2 className="text-xl font-bold text-slate-900 font-mono truncate" title={`Customer ${customer.id}`}>Customer {customer.id}</h2>
+            <div className="text-xs font-mono text-slate-500 mt-0.5 break-words">
               {customer.Contract} · Tenure: {customer.tenure} mo · Monthly: {fmt.currency(customer.MonthlyCharges ?? 70)} · Total Spend: {fmt.currency(customer.TotalCharges ?? 150)}
             </div>
           </div>
@@ -149,7 +149,7 @@ export default function CustomerModal({ customer, onClose }) {
 
         <div className="px-6 py-5 space-y-5">
           {/* Real Model Inference Row */}
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {/* Churn Probability */}
             <div className="col-span-1 border rounded-md p-4 bg-slate-50/50" style={{ borderColor: `${color}40` }}>
               <div className="flex items-center justify-between mb-2">
@@ -198,7 +198,7 @@ export default function CustomerModal({ customer, onClose }) {
             {/* Quick Intervention */}
             <div className="border border-slate-200 rounded-md p-3.5 bg-white space-y-1.5">
               <div className="section-label mb-1.5">Quick Interventions</div>
-              <button className="w-full flex items-center gap-2 text-xs font-mono font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 rounded px-2.5 py-1.5 hover:bg-indigo-100 transition-colors cursor-pointer">
+              <button className="w-full flex items-center gap-2 text-xs font-mono font-bold text-sky-700 bg-sky-50 border border-sky-200 rounded px-2.5 py-1.5 hover:bg-sky-100 transition-colors cursor-pointer">
                 <Phone size={12} /> Call Account Lead
               </button>
               <button className="w-full flex items-center gap-2 text-xs font-mono font-bold text-sky-700 bg-sky-50 border border-sky-200 rounded px-2.5 py-1.5 hover:bg-sky-100 transition-colors cursor-pointer">
@@ -213,7 +213,7 @@ export default function CustomerModal({ customer, onClose }) {
               <span className="section-label">POST /predict Feature Vector</span>
               <span className="text-slate-500 text-[10px]">Endpoint: http://127.0.0.1:5000/predict</span>
             </div>
-            <div className="grid grid-cols-4 gap-2 text-slate-600">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 text-slate-600">
               <div>Contract: <span className="font-bold text-slate-900">{customer.Contract || 'Month-to-month'}</span></div>
               <div>Internet: <span className="font-bold text-slate-900">{customer.InternetService || 'Fiber optic'}</span></div>
               <div>Tenure: <span className="font-bold text-slate-900">{customer.tenure ?? 1} mo</span></div>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import LandingPage from './components/LandingPage';
+import FilterDrawer from './components/FilterDrawer';
 import LoginPage from './components/LoginPage';
 import SignupPage from './components/SignupPage';
 import Sidebar from './components/Sidebar';
@@ -10,10 +11,11 @@ import CustomerTable from './components/CustomerTable';
 import CustomerModal from './components/CustomerModal';
 import ModelPerformancePanel from './components/ModelPerformancePanel';
 import RetentionPlaybooks from './components/RetentionPlaybooks';
-import FilterBar from './components/FilterBar';
+// FilterBar import removed (unused)
 import AlertBanner from './components/AlertBanner';
 import AnalyticsCarousel from './components/AnalyticsCarousel';
 import AIInsightCard from './components/AIInsightCard';
+import AIRecommendationSection from './components/AIRecommendationSection';
 import ClaudeImportModal from './components/ClaudeImportModal';
 import FeatureImportanceChart from './components/FeatureImportanceChart';
 import { fmt } from './utils/formatters';
@@ -75,13 +77,35 @@ const PAGE_TRANSITION = {
 };
 
 export default function App() {
-  const [currentView, setCurrentView]           = useState(getInitialView);
-  const [playbooksOpen, setPlaybooksOpen]       = useState(false);
+  const [currentView, setCurrentView] = useState(getInitialView);
+  const [playbooksOpen, setPlaybooksOpen] = useState(false);
   const [claudeImportOpen, setClaudeImportOpen] = useState(false);
-  const [filters, setFilters]                   = useState({});
+  const [filterDrawerOpen, setFilterDrawerOpen] = useState(false);
+  const [filters, setFilters] = useState({});
   const [globalSearchQuery, setGlobalSearchQuery] = useState('');
   const [selectedCustomer, setSelectedCustomer] = useState(null);
-  const [modelInfo, setModelInfo]               = useState(null);
+  const [modelInfo, setModelInfo] = useState(null);
+  // active filter count passed to TopBar
+  const activeFilterCount = Object.values(filters).filter((v, i) => {
+    // FilterBar defaults (including Segment) but we now only care about real filters
+    const keys = ['risk', 'contract', 'internet', 'payment', 'tenureRange', 'chargesRange'];
+    const key = Object.keys(filters)[i];
+    if (!keys.includes(key)) return false;
+    const defaults = {
+      risk: 'All Risk Levels',
+      contract: 'All Contracts',
+      internet: 'All Internet Services',
+      payment: 'All Payment Methods',
+      tenureRange: 'All Tenures',
+      chargesRange: 'All Charges',
+    };
+    return v !== defaults[key];
+  }).length;
+
+  // later in JSX replace FilterBar with FilterDrawer and pass props
+  // Inside main content replace line 199 (FilterBar) with:
+  // <FilterDrawer isOpen={filterDrawerOpen} onClose={() => setFilterDrawerOpen(false)} appliedFilters={filters} onApplyFilters={setFilters} />
+  // Also pass activeFilterCount and onOpenFilters to TopBar (add props).
 
   useEffect(() => {
     fetch('http://127.0.0.1:5000/model-info')
@@ -179,6 +203,8 @@ export default function App() {
             globalSearchQuery={globalSearchQuery}
             onGlobalSearchChange={setGlobalSearchQuery}
             modelInfo={modelInfo}
+            activeFilterCount={activeFilterCount}
+            onOpenFilters={() => setFilterDrawerOpen(true)}
           />
           <RetentionPlaybooks
             open={playbooksOpen}
@@ -193,11 +219,17 @@ export default function App() {
             onClose={() => setClaudeImportOpen(false)}
           />
 
-          <main className="ml-56 pt-14 min-h-screen" id="main-content">
+          <main className="ml-0 lg:ml-56 pt-14 min-h-screen" id="main-content">
             <div className="p-6 space-y-6">
 
               {/* 1. Top Bar Controls: Filters */}
-              <FilterBar onFilterChange={setFilters} />
+               {/* Filter drawer - triggered via Filters button */}
+               <FilterDrawer
+                 isOpen={filterDrawerOpen}
+                 onClose={() => setFilterDrawerOpen(false)}
+                 appliedFilters={filters}
+                 onApplyFilters={setFilters}
+               />
 
               {/* 2. 4 KPI cards: Total Customers, Churn Rate, High-Risk Customers, Revenue at Risk */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -207,7 +239,7 @@ export default function App() {
               {/* 3. AI Insight / Alert banner */}
               <div className="space-y-4">
                 <AlertBanner />
-                <AIInsightCard onOpenPlaybooks={() => setPlaybooksOpen(true)} />
+                <AIInsightCard modelInfo={modelInfo} onOpenPlaybooks={() => setPlaybooksOpen(true)} />
               </div>
 
               {/* 4. Analytics carousel */}
@@ -220,11 +252,14 @@ export default function App() {
                 globalSearch={globalSearchQuery}
               />
 
-              {/* 6. Explainability / Feature Importance & Model Transparency section */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <FeatureImportanceChart featureImportance={modelInfo?.feature_importance} />
-                <ModelPerformancePanel modelInfo={modelInfo} />
-              </div>
+              {/* AI Recommendation Section */}
+              <AIRecommendationSection 
+                filters={filters}
+                globalSearch={globalSearchQuery}
+              />
+
+              {/* 6. Model Transparency & Architecture Section */}
+              <ModelPerformancePanel modelInfo={modelInfo} />
 
               {/* Footer */}
               <div className="flex items-center justify-between pt-2 pb-4">

@@ -71,8 +71,8 @@ export default function ModelPerformancePanel({ modelInfo }) {
       className="panel border border-slate-200 rounded-md p-5 bg-white shadow-xs"
     >
       {/* Header */}
-      <div className="flex items-start justify-between mb-4">
-        <div>
+      <div className="flex items-start justify-between gap-3 mb-4 flex-wrap">
+        <div className="min-w-0">
           <div className="section-label mb-0.5">Model transparency</div>
           <div className="text-lg font-bold text-slate-900">Random forest classifier</div>
         </div>
@@ -83,12 +83,12 @@ export default function ModelPerformancePanel({ modelInfo }) {
       </div>
 
       {/* Accuracy & F1 big stat banner */}
-      <div className="flex items-center gap-3 mb-4 p-3 bg-indigo-50/70 border border-indigo-100 rounded-md">
-        <div className="w-10 h-10 rounded bg-indigo-600 text-white flex items-center justify-center shadow-xs">
+      <div className="flex items-center gap-3 mb-4 p-3 bg-sky-50/70 border border-sky-100 rounded-md">
+        <div className="w-10 h-10 rounded bg-sky-600 text-white flex items-center justify-center shadow-xs">
           <Cpu size={18} />
         </div>
         <div>
-          <div className="text-3xl font-bold text-indigo-700 font-mono leading-none">{accuracy}%</div>
+          <div className="text-3xl font-bold text-sky-700 font-mono leading-none">{accuracy}%</div>
           <div className="text-[13px] font-mono font-semibold text-slate-500 mt-1">Test set accuracy</div>
         </div>
         <div className="ml-auto text-right">
@@ -100,7 +100,7 @@ export default function ModelPerformancePanel({ modelInfo }) {
       {/* Metric bars */}
       <div className="space-y-3 mb-4">
         <MetricBar label="Accuracy" value={accuracy} color="#0EA5E9" />
-        <MetricBar label="Precision" value={precision} color="#6366F1" />
+        <MetricBar label="Precision" value={precision} color="#0284C7" />
         <MetricBar label="Recall" value={recall} color="#D97706" />
       </div>
 
@@ -112,7 +112,7 @@ export default function ModelPerformancePanel({ modelInfo }) {
             { label: 'True positive', val: tp, color: '#0EA5E9', bg: 'bg-sky-50 border-sky-200 text-sky-800' },
             { label: 'False positive', val: fp, color: '#E11D48', bg: 'bg-rose-50 border-rose-200 text-rose-800' },
             { label: 'False negative', val: fn, color: '#D97706', bg: 'bg-amber-50 border-amber-200 text-amber-800' },
-            { label: 'True negative', val: tn, color: '#6366F1', bg: 'bg-indigo-50 border-indigo-200 text-indigo-800' },
+            { label: 'True negative', val: tn, color: '#0284C7', bg: 'bg-sky-50 border-sky-200 text-sky-800' },
           ].map((cell) => (
             <div
               key={cell.label}
@@ -144,7 +144,7 @@ export default function ModelPerformancePanel({ modelInfo }) {
       </ResponsiveContainer>
 
       {/* Footer */}
-      <div className="mt-3 pt-3 border-t border-slate-200 text-[13px] font-mono text-slate-500 flex items-center justify-between">
+      <div className="mt-3 pt-3 border-t border-slate-200 text-[13px] font-mono text-slate-500 flex items-center justify-between gap-3 flex-wrap">
         <span>RandomForestClassifier · 100 trees</span>
         <span>19 feature columns</span>
       </div>

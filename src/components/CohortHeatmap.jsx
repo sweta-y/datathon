@@ -13,11 +13,11 @@ const COHORTS = [
 const MONTHS = ['M+0', 'M+1', 'M+2', 'M+3', 'M+4', 'M+5'];
 
 function getColor(val) {
-  if (val === null) return { bg: 'transparent', text: 'transparent', border: '#1C1C1C' };
-  if (val === 100) return { bg: 'rgba(124,92,255,0.25)', text: '#7C5CFF', border: 'rgba(124,92,255,0.2)' };
-  if (val >= 75) return { bg: 'rgba(34,240,216,0.15)', text: '#22F0D8', border: 'rgba(34,240,216,0.15)' };
-  if (val >= 60) return { bg: 'rgba(255,184,77,0.12)', text: '#FFB84D', border: 'rgba(255,184,77,0.15)' };
-  return { bg: 'rgba(255,79,216,0.12)', text: '#FF4FD8', border: 'rgba(255,79,216,0.15)' };
+  if (val === null) return { bg: 'transparent', text: 'transparent', border: '#E2E8F0' };
+  if (val === 100) return { bg: 'rgba(2,132,199,0.18)', text: '#0369A1', border: 'rgba(2,132,199,0.2)' };
+  if (val >= 75) return { bg: 'rgba(5,150,105,0.14)', text: '#047857', border: 'rgba(5,150,105,0.18)' };
+  if (val >= 60) return { bg: 'rgba(217,119,6,0.12)', text: '#B45309', border: 'rgba(217,119,6,0.18)' };
+  return { bg: 'rgba(225,29,72,0.1)', text: '#BE123C', border: 'rgba(225,29,72,0.16)' };
 }
 
 export default function CohortHeatmap() {
@@ -77,11 +77,11 @@ export default function CohortHeatmap() {
       </div>
 
       {/* Legend */}
-      <div className="flex items-center gap-4 mt-4 text-[13px] font-mono text-slate-500">
-        <span className="flex items-center gap-1.5"><span className="w-3 h-2.5 rounded-sm inline-block" style={{ background: 'rgba(99,102,241,0.3)' }} />100%</span>
-        <span className="flex items-center gap-1.5"><span className="w-3 h-2.5 rounded-sm inline-block" style={{ background: 'rgba(14,165,233,0.2)' }} />≥75%</span>
+      <div className="flex items-center gap-4 mt-4 flex-wrap text-[13px] font-mono text-slate-500">
+        <span className="flex items-center gap-1.5"><span className="w-3 h-2.5 rounded-sm inline-block" style={{ background: 'rgba(2,132,199,0.18)' }} />100%</span>
+        <span className="flex items-center gap-1.5"><span className="w-3 h-2.5 rounded-sm inline-block" style={{ background: 'rgba(5,150,105,0.14)' }} />≥75%</span>
         <span className="flex items-center gap-1.5"><span className="w-3 h-2.5 rounded-sm inline-block" style={{ background: 'rgba(217,119,6,0.2)' }} />≥60%</span>
-        <span className="flex items-center gap-1.5"><span className="w-3 h-2.5 rounded-sm inline-block" style={{ background: 'rgba(225,29,72,0.2)' }} />&lt;60%</span>
+        <span className="flex items-center gap-1.5"><span className="w-3 h-2.5 rounded-sm inline-block" style={{ background: 'rgba(225,29,72,0.1)' }} />&lt;60%</span>
       </div>
     </motion.div>
   );

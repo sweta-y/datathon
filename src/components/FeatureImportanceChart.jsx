@@ -2,29 +2,29 @@ import { motion } from 'framer-motion';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
 const THEME_COLORS = [
-  '#FF4FD8', // Critical (top 1)
-  '#FF4FD8', // Critical (top 2)
-  '#FFB84D', // High (top 3)
-  '#FFB84D', // High (top 4)
-  '#7C5CFF', // Medium (top 5)
-  '#7C5CFF', // Medium (top 6)
-  '#22F0D8', // Low (top 7)
-  '#22F0D8', // Low (top 8)
-  '#22F0D8', // Low (top 9)
-  '#22F0D8', // Low (top 10)
+  '#E11D48', // Critical (top 1)
+  '#E11D48', // Critical (top 2)
+  '#D97706', // High (top 3)
+  '#D97706', // High (top 4)
+  '#0284C7', // Medium (top 5)
+  '#0284C7', // Medium (top 6)
+  '#059669', // Low (top 7)
+  '#059669', // Low (top 8)
+  '#059669', // Low (top 9)
+  '#059669', // Low (top 10)
 ];
 
 const DEFAULT_FEATURES = [
-  { feature: 'TotalCharges',    value: 0.1868, color: '#FF4FD8' },
-  { feature: 'MonthlyCharges',  value: 0.1792, color: '#FF4FD8' },
-  { feature: 'tenure',          value: 0.1543, color: '#FFB84D' },
-  { feature: 'Contract',        value: 0.0796, color: '#FFB84D' },
-  { feature: 'PaymentMethod',   value: 0.0501, color: '#7C5CFF' },
-  { feature: 'OnlineSecurity',  value: 0.0496, color: '#7C5CFF' },
-  { feature: 'TechSupport',     value: 0.0436, color: '#22F0D8' },
-  { feature: 'gender',          value: 0.0279, color: '#22F0D8' },
-  { feature: 'InternetService', value: 0.0278, color: '#22F0D8' },
-  { feature: 'OnlineBackup',    value: 0.0271, color: '#22F0D8' },
+  { feature: 'TotalCharges',    value: 0.1868, color: '#E11D48' },
+  { feature: 'MonthlyCharges',  value: 0.1792, color: '#E11D48' },
+  { feature: 'tenure',          value: 0.1543, color: '#D97706' },
+  { feature: 'Contract',        value: 0.0796, color: '#D97706' },
+  { feature: 'PaymentMethod',   value: 0.0501, color: '#0284C7' },
+  { feature: 'OnlineSecurity',  value: 0.0496, color: '#0284C7' },
+  { feature: 'TechSupport',     value: 0.0436, color: '#059669' },
+  { feature: 'gender',          value: 0.0279, color: '#059669' },
+  { feature: 'InternetService', value: 0.0278, color: '#059669' },
+  { feature: 'OnlineBackup',    value: 0.0271, color: '#059669' },
 ];
 
 const CustomTooltip = ({ active, payload }) => {
@@ -84,7 +84,7 @@ export default function FeatureImportanceChart({ featureImportance }) {
         >
           <XAxis
             type="number"
-            tick={{ fill: '#444', fontSize: 9, fontFamily: 'Space Mono' }}
+            tick={{ fill: '#64748B', fontSize: 9, fontFamily: 'Space Mono' }}
             axisLine={false}
             tickLine={false}
             tickFormatter={(v) => v.toFixed(2)}
@@ -93,12 +93,12 @@ export default function FeatureImportanceChart({ featureImportance }) {
           <YAxis
             type="category"
             dataKey="feature"
-            tick={{ fill: '#888', fontSize: 9, fontFamily: 'Space Mono' }}
+            tick={{ fill: '#64748B', fontSize: 9, fontFamily: 'Space Mono' }}
             axisLine={false}
             tickLine={false}
             width={100}
           />
-          <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.02)' }} />
+          <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(14,165,233,0.06)' }} />
           <Bar dataKey="value" radius={[0, 2, 2, 0]}>
             {chartData.map((d, i) => (
               <Cell key={i} fill={d.color} fillOpacity={0.85} />
@@ -107,11 +107,11 @@ export default function FeatureImportanceChart({ featureImportance }) {
         </BarChart>
       </ResponsiveContainer>
 
-      <div className="mt-3 pt-3 border-t border-slate-200 flex items-center gap-4 text-[13px] font-mono text-slate-500">
+      <div className="mt-3 pt-3 border-t border-slate-200 flex items-center gap-4 flex-wrap text-[13px] font-mono text-slate-500">
         <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-sm inline-block bg-rose-500" />Critical (#1-2)</span>
         <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-sm inline-block bg-amber-500" />High (#3-4)</span>
-        <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-sm inline-block bg-indigo-500" />Medium (#5-6)</span>
-        <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-sm inline-block bg-sky-500" />Low (#7-10)</span>
+        <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-sm inline-block bg-sky-600" />Medium (#5-6)</span>
+        <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-sm inline-block bg-emerald-600" />Low (#7-10)</span>
       </div>
     </motion.div>
   );

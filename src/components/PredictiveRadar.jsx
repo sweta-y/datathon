@@ -11,15 +11,15 @@ const CustomTooltip = ({ active, payload }) => {
   return (
     <div className="bg-panel border border-border px-3 py-2 rounded-sm text-xs">
       <p className="font-mono text-dim text-[10px] uppercase tracking-widest mb-1">{d.payload?.driver}</p>
-      <p className="text-magenta font-bold">{d.value} <span className="text-dim font-normal">/ 100</span></p>
+      <p className="text-rose-600 font-bold">{d.value} <span className="text-dim font-normal">/ 100</span></p>
     </div>
   );
 };
 
 function getSeverityLabel(v) {
-  if (v >= 75) return { label: 'Critical', color: '#FF4FD8' };
-  if (v >= 55) return { label: 'High', color: '#FFB84D' };
-  return { label: 'Moderate', color: '#22F0D8' };
+  if (v >= 75) return { label: 'Critical', color: '#E11D48' };
+  if (v >= 55) return { label: 'High', color: '#D97706' };
+  return { label: 'Moderate', color: '#059669' };
 }
 
 export default function PredictiveRadar() {
@@ -37,8 +37,8 @@ export default function PredictiveRadar() {
         <RadarChart data={radarData} margin={{ top: 0, right: 10, bottom: 0, left: 10 }}>
           <defs>
             <linearGradient id="radarGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#FF4FD8" stopOpacity={0.3} />
-              <stop offset="100%" stopColor="#7C5CFF" stopOpacity={0.1} />
+              <stop offset="0%" stopColor="#E11D48" stopOpacity={0.22} />
+              <stop offset="100%" stopColor="#0284C7" stopOpacity={0.08} />
             </linearGradient>
           </defs>
           <PolarGrid stroke="#E2E8F0" />
@@ -49,10 +49,10 @@ export default function PredictiveRadar() {
           <Tooltip content={<CustomTooltip />} />
           <Radar
             dataKey="severity"
-            stroke="#6366F1"
+            stroke="#0284C7"
             strokeWidth={1.5}
             fill="url(#radarGrad)"
-            dot={{ fill: '#6366F1', r: 3, strokeWidth: 0 }}
+            dot={{ fill: '#0284C7', r: 3, strokeWidth: 0 }}
           />
         </RadarChart>
       </ResponsiveContainer>

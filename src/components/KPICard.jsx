@@ -4,7 +4,7 @@ import { SparklineChart } from './SparklineChart';
 import { useCountUp } from '../utils/useCountUp';
 
 const colorMap = {
-  violet:  { border: 'border-indigo-200', text: 'text-indigo-600', bg: 'bg-indigo-50', bar: 'bg-indigo-600' },
+  violet:  { border: 'border-sky-200',    text: 'text-sky-700',    bg: 'bg-sky-50',    bar: 'bg-sky-600'    },
   cyan:    { border: 'border-sky-200',    text: 'text-sky-600',    bg: 'bg-sky-50',    bar: 'bg-sky-600'    },
   magenta: { border: 'border-rose-200',   text: 'text-rose-600',   bg: 'bg-rose-50',   bar: 'bg-rose-600'   },
   amber:   { border: 'border-amber-200',  text: 'text-amber-600',  bg: 'bg-amber-50',  bar: 'bg-amber-600'  },
@@ -18,7 +18,7 @@ const SPARKLINES = {
 };
 
 const STROKE_COLORS = {
-  violet: '#6366F1', cyan: '#0EA5E9', magenta: '#E11D48', amber: '#D97706',
+  violet: '#0284C7', cyan: '#0EA5E9', magenta: '#E11D48', amber: '#D97706',
 };
 
 function parseNumeric(val) {

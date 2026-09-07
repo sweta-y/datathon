@@ -26,7 +26,7 @@ function FilterSelect({ label, options, value, onChange }) {
         <select
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="appearance-none bg-white border border-slate-200 rounded-r-md pl-2.5 pr-7 h-8 text-sm font-mono text-slate-800 font-medium focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all cursor-pointer shadow-xs"
+          className="appearance-none bg-white border border-slate-200 rounded-r-md pl-2.5 pr-7 h-8 text-sm font-mono text-slate-800 font-medium focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-200 transition-all cursor-pointer shadow-xs"
         >
           {options.map((o) => (
             <option key={o} value={o} className="bg-white text-slate-800">
@@ -105,12 +105,12 @@ export default function FilterBar({ onFilterChange }) {
       transition={{ duration: 0.3 }}
       className="panel p-3.5 bg-white border border-slate-200 rounded-md shadow-xs space-y-2.5"
     >
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-5 h-5 rounded bg-indigo-50 flex items-center justify-center text-indigo-600">
+      <div className="flex items-center justify-between gap-2 flex-wrap">
+        <div className="flex items-center gap-2 min-w-0">
+          <div className="w-5 h-5 rounded bg-sky-50 flex items-center justify-center text-sky-600">
             <Filter size={12} />
           </div>
-          <span className="text-sm font-mono font-bold text-slate-800">
+          <span className="text-sm font-mono font-bold text-slate-800 truncate">
             Customer filters — 7 dimensions
           </span>
         </div>

@@ -24,7 +24,7 @@ export default function RetentionPlaybooks({ open, onClose }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-30"
+            className="fixed inset-0 bg-slate-400/25 backdrop-blur-sm z-30"
           />
 
           {/* Drawer */}
@@ -40,11 +40,11 @@ export default function RetentionPlaybooks({ open, onClose }) {
             <div className="px-5 py-4 border-b border-border flex items-center justify-between">
               <div>
                 <div className="section-label mb-1">Retention Engine</div>
-                <div className="text-sm font-bold text-white">Playbooks</div>
+                <div className="text-sm font-bold text-slate-900">Playbooks</div>
               </div>
               <button
                 onClick={onClose}
-                className="w-7 h-7 flex items-center justify-center border border-border rounded-sm text-dim hover:text-white hover:border-muted transition-colors"
+                className="w-7 h-7 flex items-center justify-center border border-border rounded-sm text-dim hover:text-slate-900 hover:border-slate-400 transition-colors"
               >
                 <X size={13} />
               </button>
@@ -58,7 +58,7 @@ export default function RetentionPlaybooks({ open, onClose }) {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.07 }}
-                  className="border rounded-sm p-3.5 hover:bg-white/[0.02] transition-colors cursor-pointer"
+                  className="border rounded-sm p-3.5 hover:bg-slate-50 transition-colors cursor-pointer"
                   style={{ borderColor: `${pb.color}25`, background: `${pb.color}06` }}
                 >
                   {/* Top row */}
@@ -68,7 +68,7 @@ export default function RetentionPlaybooks({ open, onClose }) {
                         className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-0.5"
                         style={{ backgroundColor: pb.color }}
                       />
-                      <div className="text-xs font-bold text-white leading-tight">{pb.name}</div>
+                      <div className="text-xs font-bold text-slate-800 leading-tight">{pb.name}</div>
                     </div>
                     <ImpactBadge impact={pb.impact} />
                   </div>
@@ -96,7 +96,7 @@ export default function RetentionPlaybooks({ open, onClose }) {
                     </div>
                     <div>
                       <div className="text-[9px] font-mono text-dim mb-1">AVG RETENTION</div>
-                      <div className="text-[10px] font-mono font-bold text-white">
+                      <div className="text-[10px] font-mono font-bold text-slate-800">
                         +{pb.avgRetention} <span className="font-normal text-dim">mo</span>
                       </div>
                     </div>
@@ -127,11 +127,11 @@ export default function RetentionPlaybooks({ open, onClose }) {
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <div className="section-label mb-1">Playbooks Active</div>
-                  <div className="text-lg font-bold text-violet font-mono">2 / 4</div>
+                  <div className="text-lg font-bold text-sky-700 font-mono">2 / 4</div>
                 </div>
                 <div>
                   <div className="section-label mb-1">Customers Saved</div>
-                  <div className="flex items-center gap-1 text-lg font-bold text-cyan font-mono">
+                  <div className="flex items-center gap-1 text-lg font-bold text-emerald-600 font-mono">
                     <TrendingUp size={13} />214
                   </div>
                 </div>

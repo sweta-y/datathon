@@ -16,9 +16,9 @@ export const churnTrend = [
 
 // ─── Risk Distribution ───────────────────────────────────────────────────────
 export const riskDistribution = [
-  { label: 'High Risk', count: 847, pct: 18.4, color: '#FF4FD8' },
-  { label: 'Medium Risk', count: 1432, pct: 31.1, color: '#FFB84D' },
-  { label: 'Low Risk', count: 2323, pct: 50.5, color: '#22F0D8' },
+  { label: 'High Risk', count: 847, pct: 18.4, color: '#E11D48' },
+  { label: 'Medium Risk', count: 1432, pct: 31.1, color: '#D97706' },
+  { label: 'Low Risk', count: 2323, pct: 50.5, color: '#059669' },
 ];
 
 // ─── Churn by Segment ────────────────────────────────────────────────────────
@@ -66,7 +66,7 @@ export const retentionPlaybooks = [
     impact: 'High',
     successRate: 68,
     avgRetention: 4.2,
-    color: '#7C5CFF',
+    color: '#0284C7',
   },
   {
     id: 'PB-02',
@@ -75,7 +75,7 @@ export const retentionPlaybooks = [
     impact: 'Medium',
     successRate: 54,
     avgRetention: 6.8,
-    color: '#22F0D8',
+    color: '#0EA5E9',
   },
   {
     id: 'PB-03',
@@ -84,7 +84,7 @@ export const retentionPlaybooks = [
     impact: 'Medium',
     successRate: 47,
     avgRetention: 8.1,
-    color: '#FFB84D',
+    color: '#D97706',
   },
   {
     id: 'PB-04',
@@ -93,7 +93,7 @@ export const retentionPlaybooks = [
     impact: 'Critical',
     successRate: 71,
     avgRetention: 9.4,
-    color: '#FF4FD8',
+    color: '#E11D48',
   },
 ];
 
